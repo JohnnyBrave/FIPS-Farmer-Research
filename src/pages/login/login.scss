@@ -1,0 +1,14 @@
+page-login {
+    .multi-line-button{
+        .button-inner {
+            flex-flow: column;
+          }
+          white-space: normal;
+          height:auto;
+          padding:5px;
+    }
+    .swiper-container{
+        height:100vh;
+    }
+    
+}

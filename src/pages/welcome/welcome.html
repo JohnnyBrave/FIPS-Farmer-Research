@@ -1,0 +1,33 @@
+<ion-content scroll="false">
+  <div style="display:flex; flex-flow:column">
+    <div style="height:33vh">
+      <div style="display:flex; padding:5px;">
+        <div class="subtle-text" style="flex:1">{{user.displayName}}</div>
+        <ion-icon name="settings" style="color:rgba(255,255,255,0.7); font-size:32px" (click)="openSettings()"></ion-icon>
+      </div>
+      <div align-items-center>
+        <h1>{{ 'TITLE' | translate }}</h1>
+      </div>
+    </div>
+
+
+    <div class="buttons-container">
+      <button ion-button icon-left color="secondary" class="home-button" (click)="collectData()">
+        <ion-icon name="search" color="secondary-light" style="font-size:48px"></ion-icon>Collect Data</button>
+      <button ion-button icon-left color="secondary" class="home-button" (click)="viewResults()">
+        <ion-icon name="stats" color="secondary-light"  style="font-size:48px"></ion-icon>View Results</button>
+    </div>
+    <div style="flex-basis: 33%; height:33vh">
+      <img class="footer-image" src="../assets/img/plant.svg">
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <div padding>
+    <button ion-button block (click)="signup()">{{ 'SIGNUP' | translate }}</button>
+    <button ion-button block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
+  </div> -->
+</ion-content>

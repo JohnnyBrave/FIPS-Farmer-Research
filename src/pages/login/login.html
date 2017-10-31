@@ -1,0 +1,55 @@
+<ion-content class="primary-dark">
+  <ion-slides>
+    <!-- select new/load slide -->
+    <ion-slide>
+      <h3 style="color:rgba(255,255,255,0.9)">You must be signed in to collect data</h3>
+      <div style="display:flex">
+        <button class="multi-line-button" ion-button (click)="_showRegisterNew()" color="primary-light">
+          <ion-icon name="add" style="font-size:x-large"></ion-icon>
+          <div>Register new collector</div>
+        </button>
+        <button class="multi-line-button" ion-button (click)="_showSignInExisting()" color="secondary-light">
+          <ion-icon name="lock" style="font-size:x-large"></ion-icon>
+          <div>Sign in existing</div>
+        </button>
+      </div>
+    </ion-slide>
+    <!-- Slide 2 contains options for both new and sign in -->
+    <ion-slide>
+      <form (submit)="doLogin()" *ngIf="showSignInExisting">
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="{{ 'EMAIL' | translate }}" type="email" [(ngModel)]="form.email" name="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="{{ 'PASSWORD' | translate }}" type="password" [(ngModel)]="form.password" name="password"></ion-input>
+          </ion-item>
+          <div padding>
+            <button (click)="doLogin()" ion-button color="secondary-light" block>{{ 'LOGIN' | translate }}</button>
+            <p>{{errorMsg}}</p>
+          </div>
+        </ion-list>
+      </form>
+      <form (submit)="doRegisterNew()" *ngIf="showRegisterNew">
+        <ion-list>
+          <ion-item>
+            <ion-input placeholder="{{ 'FIRSTNAME' | translate }}" type="text" [(ngModel)]="form.firstName" name="first"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="{{ 'LASTNAME' | translate }}" type="text" [(ngModel)]="form.lastName" name="last"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="{{ 'EMAIL' | translate }}" type="email" [(ngModel)]="form.email" name="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="{{ 'PASSWORD' | translate }}" type="password" [(ngModel)]="form.password" name="password"></ion-input>
+          </ion-item>
+          <div padding>
+            <button ion-button color="primary-light" block>{{ 'REGISTER' | translate }}</button>
+            <p>{{errorMsg}}</p>
+          </div>
+        </ion-list>
+      </form>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

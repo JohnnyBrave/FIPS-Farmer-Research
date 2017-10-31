@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="primary-dark">
+    <div class="page-header">
+      <p style="width:100%; text-align:right">[ Farmer Name Here ]</p>
+      <button ion-button clear icon-only>
+        <ion-icon name="create" style="opacity:0.6"></ion-icon>
+      </button>
+    </div>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div style="display:flex; flex-flow:column; height:100%">
+
+    <div class="my-research">
+      <h2 item-left>
+        <ion-icon name="flask" style="margin: 0 5px"></ion-icon>My Research Trials</h2>
+      <ion-card *ngFor="let survey of surveys">
+        <div class="survey-title">{{survey.title}}</div>
+        <div class="survey-description">{{survey.description}}</div>
+      </ion-card>
+    </div>
+    <!-- <div class="available-experiments">
+      <h2 item-left>
+        <ion-icon name="apps" style="margin: 0 5px"></ion-icon>Available Experiments</h2>
+      <ion-card *ngFor="let survey of surveys">
+        <div class="survey-title">{{survey.title}}</div>
+        <div class="survey-description">{{survey.description}}</div>
+      </ion-card>
+    </div> -->
+
+  </div>
+
+</ion-content>
+
+<!-- 
+  <div style="flex:1; overflow:auto">
+      <ion-slides #surveySlider pager>
+        <ion-slide *ngFor="let survey of surveys" (click)="openSurvey(survey)">
+          <div class="survey-title">{{survey.title}}</div>
+          <div class="survey-image">Image</div>
+          <div class="survey-description">{{survey.description}}</div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+ -->
