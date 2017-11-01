@@ -1,21 +1,56 @@
 <ion-content padding>
-  <p>Please select the farmer you would like to collect data for</p>
-  <h3>Data Collector</h3>
-  <ion-card #myProfile>
-    <ion-list>
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="assets/img/avatar-placeholder.png">
-        </ion-avatar>
-        <h2>{{user.displayName}}</h2>
-      </ion-item>
-    </ion-list>
-  </ion-card>
+    <p>Please select the farmer you would like to collect data for</p>
+    <h3>Data Collector</h3>
+    <ion-card #myProfile>
+        <ion-list>
+            <button ion-item>
+                <ion-avatar item-start>
+                    <img src="assets/img/avatar-placeholder.png">
+                </ion-avatar>
+                <h2>{{user.displayName}}</h2>
+            </button>
+        </ion-list>
+    </ion-card>
 
-  <h3>Farmers</h3>
-  <div #myFarmers>
+    <h3>Farmers</h3>
+    <ion-card #myFarmers>
+        <ion-list>
+            <button ion-item *ngFor="let farmer of farmers" (click)="selectFarmer(farmer)">
+                {{farmer.displayName}}
+            </button>
+        </ion-list>
 
 
-  </div>
+
+    </ion-card>
+
+    <div class="dev-note">Placeholder for future table version (ignore)</div>
+    <div style="margin: auto; margin-bottom: 50px;">
+        <data-table id="persons-grid" [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)" (rowClick)="rowClick($event)"
+            (rowDoubleClick)="rowDoubleClick($event)" [rowTooltip]="rowTooltip">
+            <data-table-column [property]="'displayName'" [header]="'displayName'" [sortable]="true" [resizable]="true">
+            </data-table-column>
+            <data-table-column [property]="'date'" [header]="'Date'" [sortable]="true">
+                <ng-template #dataTableCell let-item="item">
+                    <span>{{item.date | date:'yyyy-MM-dd'}}</span>
+                </ng-template>
+            </data-table-column>
+            <data-table-column property="phoneNumber" header="Phone number" width="150px">
+            </data-table-column>
+            <data-table-column [property]="'jobTitle'" [header]="'Job title'" [visible]="false">
+            </data-table-column>
+            <data-table-column [property]="'active'" [header]="'Active'" [width]="100" [resizable]="true">
+                <ng-template #dataTableHeader let-item="item">
+                    <span style="color: rgb(232, 0, 0)">Active</span>
+                </ng-template>
+                <ng-template #dataTableCell let-item="item">
+                    <span style="color: grey">
+                        <span class="glyphicon glyphicon-ok" *ngIf="item.active"></span>
+                        <span class="glyphicon glyphicon-remove" *ngIf="!item.active"></span>
+                    </span>
+                </ng-template>
+            </data-table-column>
+        </data-table>
+    </div>
 
 </ion-content>

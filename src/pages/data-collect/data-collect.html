@@ -1,32 +1,38 @@
 <ion-header>
   <ion-navbar color="primary-dark">
     <div class="page-header">
-      <p style="width:100%; text-align:right">[ Farmer Name Here ]</p>
+      <button class="farmer-header" ion-button icon-left clear (click)="changeFarmer()">
+        <ion-icon name="person"></ion-icon>
+        Farmer: {{farmer.displayName}}</button>
       <button ion-button clear icon-only>
-        <ion-icon name="create" style="opacity:0.6"></ion-icon>
+        <ion-icon name="more" ></ion-icon>
       </button>
     </div>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <div style="display:flex; flex-flow:column; height:100%">
-
+    <div icon-left></div>
     <div class="my-research">
       <h2 item-left>
-        <ion-icon name="flask" style="margin: 0 5px"></ion-icon>My Research Trials</h2>
-      <ion-card *ngFor="let survey of surveys">
-        <div class="survey-title">{{survey.title}}</div>
-        <div class="survey-description">{{survey.description}}</div>
+        <ion-icon name="flask" style="margin: 0 5px"></ion-icon>Current Trials</h2>
+      <ion-card *ngFor="let experiment of experiments">
+        <div class="experiment-title-bar">
+            <div class="experiment-title">{{experiment.title}}</div>
+            <button ion-button icon-only clear><ion-icon name="information-circle"></ion-icon></button>
+        </div>
+        
+        <div class="experiment-description">{{experiment.description}}</div>
       </ion-card>
     </div>
-    <!-- <div class="available-experiments">
+    <div class="available-experiments">
       <h2 item-left>
         <ion-icon name="apps" style="margin: 0 5px"></ion-icon>Available Experiments</h2>
-      <ion-card *ngFor="let survey of surveys">
-        <div class="survey-title">{{survey.title}}</div>
-        <div class="survey-description">{{survey.description}}</div>
+      <ion-card *ngFor="let experiment of experiments">
+        <div class="experiment-title">{{experiment.title}}</div>
+        <div class="experiment-description">{{experiment.description}}</div>
       </ion-card>
-    </div> -->
+    </div>
 
   </div>
 
@@ -34,11 +40,11 @@
 
 <!-- 
   <div style="flex:1; overflow:auto">
-      <ion-slides #surveySlider pager>
-        <ion-slide *ngFor="let survey of surveys" (click)="openSurvey(survey)">
-          <div class="survey-title">{{survey.title}}</div>
-          <div class="survey-image">Image</div>
-          <div class="survey-description">{{survey.description}}</div>
+      <ion-slides #experimentSlider pager>
+        <ion-slide *ngFor="let experiment of experiments" (click)="openExperiment(experiment)">
+          <div class="experiment-title">{{experiment.title}}</div>
+          <div class="experiment-image">Image</div>
+          <div class="experiment-description">{{experiment.description}}</div>
         </ion-slide>
       </ion-slides>
     </div>

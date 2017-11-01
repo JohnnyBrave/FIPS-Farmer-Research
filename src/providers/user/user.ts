@@ -7,7 +7,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from 'firebase/app';
 
 @Injectable()
-export class User {
+export class UserProvider {
   user: any;
 
   constructor(public api: Api, public events: Events, private afAuth: AngularFireAuth) {
@@ -48,9 +48,29 @@ export class User {
     })
   }
 
+  changePassword(oldPass, newPass) {
+    return new Promise((resolve, reject) => {
+      var user = firebase.auth().currentUser;
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        oldPass
+      );
+      user.reauthenticateWithCredential(credential)
+        .then(_ => {
+          user.updatePassword(newPass)
+            .then(res => {
+              console.log('res', res)
+              resolve('success')
+            })
+        })
+        .catch(err => reject(err))
+    })
+  }
+
 
   logout() {
     this.user = null;
+    return firebase.auth().signOut()
   }
 
   _registerLoginListener() {
@@ -59,7 +79,7 @@ export class User {
         // User is signed in.
         console.log('user signed in', user)
         this.user = user
-        this.events.publish('user:signedIn',user)
+        this.events.publish('user:signedIn', user)
       }
       else {
         console.log('no user signed in')

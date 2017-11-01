@@ -6,16 +6,29 @@ page-data-collect {
         justify-content: space-between;
         color:rgba(255,255,255,0.6)
     }
-    .survey-title{
-        background-color: color($colors,secondary-dark);
-        padding:5px;
+    .farmer-header{
+        flex:1;
+        line-height: 56px;
+        vertical-align: middle;
     }
-    .survey-image{
+    .experiment-title{
+        padding:5px;
+        font-weight: 600;
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .experiment-title-bar{
+        display: flex;
+        background-color: color($colors,secondary-dark);
+    }
+    .experiment-image{
         flex:1;
         background-color: rgba(255,255,255,0.9);
         height:300px;
     }
-    .survey-description{
+    .experiment-description{
         padding:5px
     }
     .card{
@@ -36,5 +49,8 @@ page-data-collect {
     }
     h2{
         font-size: large
+    }
+    .button{
+        color:rgba(255,255,255,0.8)
     }
 }

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, Slides, NavController, ToastController, LoadingController } from 'ionic-angular';
 
-import { User } from '../../providers/providers';
+import { UserProvider } from '../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -20,7 +20,7 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
-    public userPrvdr: User,
+    public userPrvdr: UserProvider,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     public loadingCtrl: LoadingController) {

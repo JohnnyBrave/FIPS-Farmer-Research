@@ -1,6 +1,7 @@
 # FIPS Farmer Research
 ##Build Notes
-Ensure custom development datatables correctly implemented
+Ensure custom development datatables correctly implemented  
+Ensure dev code commented out and prod code uncommented (e.g. ionViewCanEnter and data models)
 
 
 ## Development Notes

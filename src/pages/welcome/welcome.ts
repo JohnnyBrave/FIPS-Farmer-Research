@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Events } from 'ionic-angular';
-import { User } from '../../providers/user/user'
+import { UserProvider } from '../../providers/user/user'
 
 @IonicPage()
 @Component({
@@ -10,7 +10,7 @@ import { User } from '../../providers/user/user'
 export class WelcomePage {
   user:any={displayName:''}
 
-  constructor(public navCtrl: NavController, public userPrdr:User, public events:Events) { 
+  constructor(public navCtrl: NavController, public userPrvdr:UserProvider, public events:Events) { 
     this.events.subscribe('user:signedIn',user=>this.user=user)
   }
  
@@ -29,7 +29,7 @@ export class WelcomePage {
     .then(res=>{
       if(res==false){this.navCtrl.push('LoginPage')}
     })
-    .catch(()=> {})
+    .catch((err)=> console.error(err))
   }
   viewResults(){
     this.navCtrl.push('ResultsOverviewPage')

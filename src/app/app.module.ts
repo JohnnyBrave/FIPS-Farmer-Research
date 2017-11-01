@@ -13,17 +13,16 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environments';
-// 3rd party
-import { DataTableModule } from 'angular-4-data-table/dist/index';
 // Own content
 import { Items } from '../mocks/providers/items';
 import { Settings } from '../providers/providers';
-import { User } from '../providers/providers';
+import { UserProvider } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { DatabaseProvider } from '../providers/providers';
 import {QuestionControlProvider} from '../providers/providers'
 import {QuestionProvider} from '../providers/providers'
 import { MyApp } from './app.component';
+import { NotificationsProvider } from '../providers/notifications/notifications';
 
 
 // The translate loader needs to know where to load i18n files
@@ -66,7 +65,6 @@ export function provideSettings(storage: Storage) {
     }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    DataTableModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -75,7 +73,7 @@ export function provideSettings(storage: Storage) {
   providers: [
     Api,
     Items,
-    User,
+    UserProvider,
     Camera,
     SplashScreen,
     StatusBar,
@@ -84,7 +82,8 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     DatabaseProvider,
     QuestionControlProvider,
-    QuestionProvider
+    QuestionProvider,
+    NotificationsProvider
   ]
 })
 export class AppModule { }
