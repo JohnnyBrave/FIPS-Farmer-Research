@@ -13,14 +13,17 @@
     </ion-card>
 
     <div style="display: flex">
-            <h3 class="farmers-heading">Farmers</h3>
-            <button ion-button icon-only color="secondary" (click)="addFarmer()"><ion-icon name="add"></ion-icon></button>
+        <h3 class="farmers-heading">Farmers</h3>
+        <button ion-button icon-only color="secondary" (click)="addFarmer()">
+            <ion-icon name="add"></ion-icon>
+        </button>
     </div>
     <ion-card #myFarmers>
         <ion-list>
-            <button ion-item *ngFor="let farmer of farmers | async" (click)="selectFarmer(farmer)">
-                {{farmer.displayName}}
-            </button>
+            <ion-item *ngFor="let farmer of farmers | async" (click)="selectFarmer(farmer)">
+                <h2>{{farmer.displayName}}</h2>
+                <p class="subtle-text" style="font-size: small">{{farmer.householdCode}}</p>
+            </ion-item>
         </ion-list>
 
 

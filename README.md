@@ -1,7 +1,9 @@
 # FIPS Farmer Research
-##Build Notes
-Ensure custom development datatables correctly implemented  
-Ensure dev code commented out and prod code uncommented (e.g. ionViewCanEnter and data models)
+## Build Notes
+- Ensure custom development datatables correctly implemented  
+- Ensure dev code commented out and prod code uncommented (e.g. ionViewCanEnter and data models)
+- Update version codes in `config.xml` and `welcome.html`  
+*(v 0.1.0 only - ensure all farmers moved to `_key` instead of `_id` and remove `_experiments`)*
 
 
 ## Development Notes

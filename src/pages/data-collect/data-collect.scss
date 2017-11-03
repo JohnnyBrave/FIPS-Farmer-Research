@@ -4,12 +4,13 @@ page-data-collect {
         width:100%;
         display:flex;
         justify-content: space-between;
-        color:rgba(255,255,255,0.6)
+        color:rgba(255,255,255,0.9)
     }
     .farmer-header{
         flex:1;
         line-height: 56px;
         vertical-align: middle;
+        color:rgba(255,255,255,1);
     }
     .experiment-title{
         padding:5px;
@@ -34,11 +35,9 @@ page-data-collect {
     .card{
         background-color:rgba(255,255,255,1);
     }
-    .my-research, .available-experiments{
-        flex:1;
-    }
     
     .my-research{
+        flex:1;
         background-color:color($colors,primary-light);
     }
     .available-experiments{
@@ -50,7 +49,7 @@ page-data-collect {
     h2{
         font-size: large
     }
-    .button{
-        color:rgba(255,255,255,0.8)
-    }
+    // .button{
+    //     color:rgba(255,255,255,0.8)
+    // }
 }

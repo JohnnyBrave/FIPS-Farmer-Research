@@ -16,7 +16,8 @@ export class DataCollectPage {
   user: any;
   farmer: any;
   current=[];
-  available=[]
+  available=[];
+  enrolled={}
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userPrvdr: UserProvider, private databasePrvdr:DatabaseProvider) {
@@ -29,33 +30,52 @@ export class DataCollectPage {
    
   };
   ionViewDidLoad(){
-    this.experiments=this.databasePrvdr.getExperiments()
-    this.databasePrvdr.getExperiments()
+    // get static list of experiments at time of entering (observer assumed not necessary)
+    this.experiments=this.databasePrvdr.experiments
+    console.log('experiments',this.experiments)
+    // subscribe to updates to farmer experiments
+    this.databasePrvdr.getFarmerExperiments(this.farmer._key)
     .subscribe(
-      x=>this._filterExperiments(x)
+      x=>{
+        console.log('farmer experiments',x)
+        x.forEach((element:any,index) => {
+          this.enrolled[element._key]=true     
+        });
+        console.log('enrolled',this.enrolled)
+      }
     )
   }
+  showExperimentDetail(experiment){
+    this.navCtrl.push('ExperimentDetailPage',experiment)
+  }
+  collectData(experiment){
+    console.log('collecting data',experiment)
+    this.navCtrl.push('SurveysOverviewPage',{farmer:this.farmer, experiment:experiment})
+  }
+  viewResults(experiment){
+
+  }
   _filterExperiments(experiments){
+    console.log('experiments',experiments)
     //iterate experiment list pushing farmer enrolled to current and others to available
     let current=[]
     let available=[]
     experiments.forEach(x => {
-      if(this.farmer._experiments[x._key]){
-        current.push(x)
-      }
-      else(available.push(x))
+      // if(this.farmer._experiments[x._key]){
+      //   current.push(x)
+      // }
+      // else(available.push(x))
     }); 
     this.current=current;
     this.available=available
   }
   // uncomment for production
   ionViewCanEnter(): boolean {
-    console.log('user?', this.userPrvdr.user)
     if (this.userPrvdr.user) {
       this.user = this.userPrvdr.user
       return true;
     } else {
-      console.log('denied')
+      console.log('access denied')
       this.navCtrl.push('LoginPage')
       return false;
     }
@@ -68,6 +88,11 @@ export class DataCollectPage {
   }
   changeFarmer(){
     this.navCtrl.push('FarmerSelectPage')
+  }
+  enrolFarmer(experiment){
+    // enrol farmer in experiment by binding both farmer key to experiment and experiment key to farmer
+    console.log('enrolling',this.farmer,experiment)
+    this.databasePrvdr.enrolFarmerInExperiment(this.farmer._key,experiment._key)
   }
 
 
@@ -98,10 +123,7 @@ export class DataCollectPage {
 
 var demoFarmer = 
 {
-  "_experiments": {
-    "ebTsqw4C5Wq9mn8xK1mT": true
-  },
-  "_id": "EZu8LTNcscrAN83kEZa3",
+  "_key": "EZu8LTNcscrAN83kEZa3",
   "displayName": "Example Farmer 1",
   "firstName": "Example Farmer",
   "householdCode": "Code001",

@@ -1,0 +1,22 @@
+<!--
+Page to display all surveys related to an experiment, monitoring which has been completed by an
+individual farmer
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>surveysOverview</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1>Surveys</h1>
+  <div *ngFor="let survey of surveys | async">
+    <button ion-button (click)=startSurvey(survey)>
+      {{survey.title}}
+    </button>
+  </div>
+
+</ion-content>

@@ -1,17 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
-import { DatabaseProvider, NotificationsProvider } from '../../../providers/providers'
+import { DatabaseProvider, NotificationsProvider } from '../../../../providers/providers'
 
 @IonicPage()
 @Component({
-  selector: 'page-new-farmer-registration',
-  templateUrl: 'new-farmer-registration.html',
+  selector: 'page-survey-grow-plus1',
+  templateUrl: 'survey-grow-plus1.html',
 })
 
 
 
-export class NewFarmerRegistrationPage {
+export class SurveyGrowPlus1Page {
   formgroup: FormGroup
 
 

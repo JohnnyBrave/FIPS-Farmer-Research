@@ -40,4 +40,23 @@ p{
     margin:1em 0;
     padding:5px;
 }
+.pointer{
+    cursor: pointer;
+}
+
+// survey theming
+.survey{
+    .fixed-content{
+        background-color:#e8e8e8
+    }
+    .card{
+        background-color: white;
+    }
+    .label{
+        color:black
+    }
+    .select-text, .text-input{
+        color:color($colors,primary-dark)
+    }
+}
 

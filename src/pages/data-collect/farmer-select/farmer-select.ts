@@ -30,12 +30,11 @@ export class FarmerSelectPage {
 
   // uncomment for production
   ionViewCanEnter(): boolean{
-    console.log('user?',this.userPrvdr.user)
     if(this.userPrvdr.user){
       this.user=this.userPrvdr.user
        return true;
      } else {
-       console.log('denied')
+       console.log('access denied')
        return false;
      }    
   }
