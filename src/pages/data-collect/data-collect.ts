@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { UserProvider } from '../../providers/providers'
+import { UserProvider, DatabaseProvider } from '../../providers/providers'
 // dev mocks
-import experiments from '../../mocks/datasets/experiments'
+// import experiments from '../../mocks/datasets/experiments'
 
 @IonicPage()
 @Component({
@@ -10,33 +10,56 @@ import experiments from '../../mocks/datasets/experiments'
   templateUrl: 'data-collect.html',
 })
 export class DataCollectPage {
+
   @ViewChild('experimentSlider') experimentSlider: Slides;
   experiments: any;
   user: any;
   farmer: any;
+  current=[];
+  available=[]
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userPrvdr: UserProvider) {
-    this.experiments = experiments
-    console.log('experiments',experiments)
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userPrvdr: UserProvider, private databasePrvdr:DatabaseProvider) {
     this.farmer = navParams.data
     // dev
+    // this.experiments = experiments
+    // console.log('experiments',experiments)
     if (!this.farmer.displayName) { this.farmer = demoFarmer }
     console.log('farmer',this.farmer)
    
   };
+  ionViewDidLoad(){
+    this.experiments=this.databasePrvdr.getExperiments()
+    this.databasePrvdr.getExperiments()
+    .subscribe(
+      x=>this._filterExperiments(x)
+    )
+  }
+  _filterExperiments(experiments){
+    //iterate experiment list pushing farmer enrolled to current and others to available
+    let current=[]
+    let available=[]
+    experiments.forEach(x => {
+      if(this.farmer._experiments[x._key]){
+        current.push(x)
+      }
+      else(available.push(x))
+    }); 
+    this.current=current;
+    this.available=available
+  }
   // uncomment for production
-  // ionViewCanEnter(): boolean {
-  //   console.log('user?', this.userPrvdr.user)
-  //   if (this.userPrvdr.user) {
-  //     this.user = this.userPrvdr.user
-  //     return true;
-  //   } else {
-  //     console.log('denied')
-  //     this.navCtrl.push('LoginPage')
-  //     return false;
-  //   }
-  // }
+  ionViewCanEnter(): boolean {
+    console.log('user?', this.userPrvdr.user)
+    if (this.userPrvdr.user) {
+      this.user = this.userPrvdr.user
+      return true;
+    } else {
+      console.log('denied')
+      this.navCtrl.push('LoginPage')
+      return false;
+    }
+  }
 
 
   openExperiment(experiment) {
@@ -73,4 +96,14 @@ export class DataCollectPage {
 
 }
 
-var demoFarmer = { "displayName": "Aaron 2Moore", "email": "Heath44@hotmail.com", "jobTitle": "Regional Configuration Producer", "active": true, "phoneNumber": "611-898-6201", "date": "2015-11-06T07:21:25.510Z" }
+var demoFarmer = 
+{
+  "_experiments": {
+    "ebTsqw4C5Wq9mn8xK1mT": true
+  },
+  "_id": "EZu8LTNcscrAN83kEZa3",
+  "displayName": "Example Farmer 1",
+  "firstName": "Example Farmer",
+  "householdCode": "Code001",
+  "lastName": "1"
+}

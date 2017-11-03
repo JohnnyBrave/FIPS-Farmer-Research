@@ -4,27 +4,28 @@ import { Events } from 'ionic-angular'
 import { Api } from '../api/api';
 // auth
 import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection  } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserProvider {
   user: any;
+  private obsDoc: AngularFirestoreDocument<any>;
+  private obsCollection:AngularFirestoreCollection<any>
+  items: Observable<any[]>;
 
-  constructor(public api: Api, public events: Events, private afAuth: AngularFireAuth) {
+  constructor(public api: Api, public events: Events, private afAuth: AngularFireAuth, private afs:AngularFirestore) {
     console.log('user provider loaded')
     this._registerLoginListener()
 
   }
 
   login(form) {
-    return new Promise((resolve, reject) => {
-      this.afAuth.auth.signInWithEmailAndPassword(form.email, form.password)
-        .then(user => {
-          this.user = user;
-          resolve(user)
-        })
-        .catch(err => reject(err))
-    })
+    return this.afAuth.auth.signInWithEmailAndPassword(form.email, form.password)
+  }
+  getUser(){
+    return this.user ? this.user : {displayName:null}
   }
   register(form) {
     return new Promise((resolve, reject) => {
@@ -66,8 +67,6 @@ export class UserProvider {
         .catch(err => reject(err))
     })
   }
-
-
   logout() {
     this.user = null;
     return firebase.auth().signOut()

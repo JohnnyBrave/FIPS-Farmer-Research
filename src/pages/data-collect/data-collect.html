@@ -3,7 +3,7 @@
     <div class="page-header">
       <button class="farmer-header" ion-button icon-left clear (click)="changeFarmer()">
         <ion-icon name="person"></ion-icon>
-        Farmer: {{farmer.displayName}}</button>
+        {{farmer.displayName}}</button>
       <button ion-button clear icon-only>
         <ion-icon name="more" ></ion-icon>
       </button>
@@ -16,7 +16,7 @@
     <div class="my-research">
       <h2 item-left>
         <ion-icon name="flask" style="margin: 0 5px"></ion-icon>Current Trials</h2>
-      <ion-card *ngFor="let experiment of experiments">
+      <ion-card *ngFor="let experiment of current">
         <div class="experiment-title-bar">
             <div class="experiment-title">{{experiment.title}}</div>
             <button ion-button icon-only clear><ion-icon name="information-circle"></ion-icon></button>
@@ -28,7 +28,7 @@
     <div class="available-experiments">
       <h2 item-left>
         <ion-icon name="apps" style="margin: 0 5px"></ion-icon>Available Experiments</h2>
-      <ion-card *ngFor="let experiment of experiments">
+      <ion-card *ngFor="let experiment of available">
         <div class="experiment-title">{{experiment.title}}</div>
         <div class="experiment-description">{{experiment.description}}</div>
       </ion-card>

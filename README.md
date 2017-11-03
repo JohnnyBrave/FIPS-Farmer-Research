@@ -17,3 +17,11 @@ Import as specified doesn't seem to work so instead need to
 2. Annoyingly there is an error from module ids not coming through (type string).
 To fix need to remove all versions of module.id from src, and rebuild 
 (run `yarn` command should install dependencies and build, otherwise `npm install` `npm run build`)
+
+###Surveys
+A few different ways to deliver surveys have been experimented with, ranging from entirely individualised pages
+(e.g. see pages/surveys/...), to more general schemas for questions (see models/surveyForms/...).
+Due to current nature of project and time constraints it is assumed that bespoke makes the most sense, 
+general schemas likely to be overkill and not as good as finding full integration with likes of odk xmlforms.
+Using reactive forms with formbuild, see more info here: https://angular.io/guide/reactive-forms
+

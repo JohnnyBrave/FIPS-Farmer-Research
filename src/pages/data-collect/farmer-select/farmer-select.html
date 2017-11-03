@@ -12,10 +12,13 @@
         </ion-list>
     </ion-card>
 
-    <h3>Farmers</h3>
+    <div style="display: flex">
+            <h3 class="farmers-heading">Farmers</h3>
+            <button ion-button icon-only color="secondary" (click)="addFarmer()"><ion-icon name="add"></ion-icon></button>
+    </div>
     <ion-card #myFarmers>
         <ion-list>
-            <button ion-item *ngFor="let farmer of farmers" (click)="selectFarmer(farmer)">
+            <button ion-item *ngFor="let farmer of farmers | async" (click)="selectFarmer(farmer)">
                 {{farmer.displayName}}
             </button>
         </ion-list>
@@ -24,7 +27,7 @@
 
     </ion-card>
 
-    <div class="dev-note">Placeholder for future table version (ignore)</div>
+    <!-- <div class="dev-note">Placeholder for future table version (ignore)</div>
     <div style="margin: auto; margin-bottom: 50px;">
         <data-table id="persons-grid" [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)" (rowClick)="rowClick($event)"
             (rowDoubleClick)="rowDoubleClick($event)" [rowTooltip]="rowTooltip">
@@ -51,6 +54,6 @@
                 </ng-template>
             </data-table-column>
         </data-table>
-    </div>
+    </div> -->
 
 </ion-content>

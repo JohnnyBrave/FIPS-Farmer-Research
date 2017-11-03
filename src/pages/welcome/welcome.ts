@@ -12,6 +12,10 @@ export class WelcomePage {
 
   constructor(public navCtrl: NavController, public userPrvdr:UserProvider, public events:Events) { 
     this.events.subscribe('user:signedIn',user=>this.user=user)
+    
+  }
+  ionViewDidEnter(){
+    this.user=this.userPrvdr.getUser()
   }
  
   login() {

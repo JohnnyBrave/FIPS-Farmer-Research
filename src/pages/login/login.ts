@@ -68,12 +68,10 @@ export class LoginPage {
     loading.present().then(_ => {
       this.userPrvdr.login(this.form)
         .then(user => {
-          console.log('signed in', user)
           loading.dismiss();
-          this.navCtrl.pop()
+          if(this.navCtrl.canGoBack()){this.navCtrl.pop()}
         })
         .catch(err => {
-          console.log('there was an error', err)
           this.errorMsg = err.message
           loading.dismiss()
         })

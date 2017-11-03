@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="secondary-light">
+    <ion-title>
+      Register New Farmer
+    </ion-title>
+    <!-- <ion-buttons start>
+      <button ion-button icon-left (click)="prev()">
+        <ion-icon name="arrow-back"></ion-icon> Prev</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="next()">Next
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+  <ion-list no-lines>
+    <ion-card>
+      <form [formGroup]="formgroup">
+        <ion-item>
+          <ion-label floating>*First Name</ion-label>
+          <ion-input formControlName="firstName" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>*Last Name</ion-label>
+          <ion-input formControlName="lastName" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>*Household Code</ion-label>
+          <ion-input formControlName="householdCode" type="text"></ion-input>
+        </ion-item>
+      </form>
+    </ion-card>
+
+  </ion-list>
+  <br>
+  <button #submit ion-button full color="secondary-dark" (click)="register()" style="margin-bottom:30px" [disabled]="formgroup.status!='VALID'">Register</button>
+</ion-content>

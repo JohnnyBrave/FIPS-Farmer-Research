@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { UserProvider } from '../../../providers/user/user';
-import { DataTableResource } from 'angular-4-data-table';
+import { UserProvider, DatabaseProvider } from '../../../providers/providers';
+// import { DataTableResource } from 'angular-4-data-table';
 // dev
-import farmers from '../../../mocks/datasets/farmers'
+// import farmers from '../../../mocks/datasets/farmers'
 
 @IonicPage()
 @Component({
@@ -13,32 +13,40 @@ import farmers from '../../../mocks/datasets/farmers'
 export class FarmerSelectPage {
   user: any={displayName:''};
   farmers: any;
-  farmersTable = new DataTableResource(farmers);
+  // farmersTable = new DataTableResource(this.farmers);
   items = [];
   itemCount = 0;
 
-  constructor(public navCtrl: NavController, public userPrvdr: UserProvider, public events: Events) {
+  constructor(public navCtrl: NavController, public userPrvdr: UserProvider, public events: Events, public databasePrvdr:DatabaseProvider) {
     this.user=this.userPrvdr.user ? this.userPrvdr.user : {displayName:''}
     this.events.subscribe('user:signedIn', user => this.user=user)
-    this.farmers = farmers
+  }
+
+  ionViewDidLoad(){
+    // subscribe to farmers collection doc as observable
+    // note, no need to subscribe as automatically handled by ngFor async pipe
+    this.farmers=this.databasePrvdr.getFarmers()
   }
 
   // uncomment for production
-
-  // ionViewCanEnter(): boolean{
-  //   console.log('user?',this.userPrvdr.user)
-  //   if(this.userPrvdr.user){
-  //     this.user=this.userPrvdr.user
-  //      return true;
-  //    } else {
-  //      console.log('denied')
-  //      return false;
-  //    }    
-  // }
+  ionViewCanEnter(): boolean{
+    console.log('user?',this.userPrvdr.user)
+    if(this.userPrvdr.user){
+      this.user=this.userPrvdr.user
+       return true;
+     } else {
+       console.log('denied')
+       return false;
+     }    
+  }
 
   selectFarmer(farmer){
     console.log('farmer selected',farmer)
     this.navCtrl.push('DataCollectPage',farmer)
+  }
+  addFarmer(){
+    console.log('adding farmer')
+    this.navCtrl.push('NewFarmerRegistrationPage')
   }
 
   reloadItems(e){
