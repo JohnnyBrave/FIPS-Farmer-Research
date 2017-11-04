@@ -2,6 +2,7 @@
 
 ##0.1.1
 - Farmer enrollment
+- Experiment detail page (click (i) or on text in available experiments)
 
 ##0.1.0
 First alpha release, includes:

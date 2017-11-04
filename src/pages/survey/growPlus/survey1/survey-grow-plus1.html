@@ -19,26 +19,62 @@
   <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
   <ion-list no-lines>
     <ion-card>
-      <form [formGroup]="formgroup">
-        <ion-item>
+      <form [formGroup]="formGroups.part1">
+        <ion-item text-wrap>
           <ion-label>Have you used GrowPlus before?</ion-label>
-          <ion-select formControlName="firstName">
+          <ion-select formControlName="Have you used GrowPlus before?" [(ngModel)]="responses.usedBefore">
             <ion-option value="yes">Yes</ion-option>
             <ion-option value="no">No</ion-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label floating>*Last Name</ion-label>
           <ion-input formControlName="lastName" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>*Household Code</ion-label>
           <ion-input formControlName="householdCode" type="text"></ion-input>
-        </ion-item>
+        </ion-item> -->
       </form>
+      <form [formGroup]="formGroups.part2" *ngIf="responses.usedBefore">
+        <ion-item text-wrap>
+          <ion-label>What did you use it with?</ion-label>
+          <ion-select formControlName="Used with" multiple>
+            <ion-option *ngFor="let option of questionMeta['Used with'].options" [value]="option.value">
+              {{option.label}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <div class="question">What differences did you observe after treating with GroPlus?</div>
+        <div class="hint">Listen to response and mark relevant</div>
+        <div formGroupName="Differences observed">
+          <div *ngFor="let difference of questionMeta['Differences observed'].options">
+            <ion-item text-wrap class="sub-item">
+              <ion-label>{{difference.label}}</ion-label>
+              <ion-select [formControlName]="difference.value" >
+                <ion-option *ngFor="let option of difference.subOptions" [value]="option.value">{{option.label}}</ion-option>
+              </ion-select>
+            </ion-item>
+
+          </div>
+        </div>
+        <!-- <ion-item text-wrap>
+          <ion-select formControlName="Differences observed">
+            <ion-option value="beans">Beans</ion-option>
+            <ion-option value="cowpeas">Cowpeas</ion-option>
+            <ion-option value="greengrams">Greengrams</ion-option>
+            <ion-option value="pigeon pea">Pigeon Pea</ion-option>
+            <ion-option value="other legumes">Other Legumes</ion-option>
+            <ion-option value="vegetables">Vegetables</ion-option>
+            <ion-option value="other non-legume">Other Non-Legume Crops</ion-option>
+          </ion-select>
+        </ion-item> -->
+      </form>
+      
     </ion-card>
+    <button ion-button block (click)="continue('part2')">Continue</button>
 
   </ion-list>
   <br>
-  <button #submit ion-button full color="secondary-dark" (click)="register()" style="margin-bottom:30px" [disabled]="formgroup.status!='VALID'">Register</button>
+  <!-- <button #submit ion-button full color="secondary-dark" (click)="register()" style="margin-bottom:30px" [disabled]="!surveyValid">Register</button> -->
 </ion-content>

@@ -58,5 +58,28 @@ p{
     .select-text, .text-input{
         color:color($colors,primary-dark)
     }
+    .question, .hint{
+        padding-left: 16px;
+    }
+    .hint{
+        font-size: smaller;
+        font-style: italic;
+        color:rgba(0,0,0,0.7);
+        margin-bottom:5px;
+    }
+    .sub-item{
+        // list of select elements, indented and less spacing
+        padding-left:32px;
+        .label{
+            margin:0;
+        }
+        .select{
+            padding:0 8px 0 6px;
+        }
+        .input-wrapper{
+            border-bottom:1px solid rgba(0,0,0,0.4);
+            border-collapse: collapse;
+        }
+    }
 }
 
