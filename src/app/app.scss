@@ -29,6 +29,7 @@
 p{
     color:rgba(255,255,255,0.9);
 }
+
 .item{
     background-color:rgba(255,255,255,0.9)
 }
@@ -43,14 +44,20 @@ p{
 .pointer{
     cursor: pointer;
 }
+.underline{
+    border-bottom: 1px solid rgba(255,255,255,0.9);
+    padding-bottom: 8px;
+}
+.card, .card-md{
+    background-color: white;
+    padding: 5px;
+    margin: 0;
+}
 
 // survey theming
 .survey{
     .fixed-content{
         background-color:#e8e8e8
-    }
-    .card{
-        background-color: white;
     }
     .label{
         color:black

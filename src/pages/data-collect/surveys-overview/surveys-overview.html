@@ -2,21 +2,35 @@
 Page to display all surveys related to an experiment, monitoring which has been completed by an
 individual farmer
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>surveysOverview</ion-title>
-  </ion-navbar>
-
-</ion-header>
 
 
 <ion-content padding>
-  <h1>Surveys</h1>
-  <div *ngFor="let survey of surveys | async">
-    <button ion-button (click)=startSurvey(survey)>
-      {{survey.title}}
-    </button>
+  <div style="display: flex" class="underline">
+    <ion-icon name="flask" class="title-icon"></ion-icon>
+    <div class="experiment-title">{{experiment.title}}</div>
   </div>
-
+  <ion-card>
+    <h3>Surveys</h3>
+    <div *ngFor="let survey of surveys | async">
+      <div *ngIf="experiment.surveys[survey._key]" class="survey-details" (click)=startSurvey(survey)>
+        <div style="display: flex">
+          <ion-icon name="clipboard"></ion-icon>
+          <div style="margin:2px 0 0 5px; flex:1">{{survey.title}}</div>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </div>
+        <div *ngIf="farmerCompleted[survey._key]" style="margin-top:10px">
+          <div style="display: flex">
+            <ion-icon name="checkmark-circle" color="primary-dark"></ion-icon>
+            <div style="flex:1; margin-left:4px">
+              <div>Complete</div>
+              <div style="font-size:x-small; color:rgba(0,0,0,0.6)">{{farmerCompleted[survey._key] | date:'short'}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="incomplete" *ngIf="!farmerCompleted[survey._key]" style="margin-top:10px">
+          <div>Not Completed</div>
+        </div>
+      </div>
+    </div>
+  </ion-card>
 </ion-content>

@@ -37,7 +37,7 @@ Data is stored in nested collections and documents. As a general rule, items of 
 contains master list of all surveys
 
 - **Farmers**  
-contains individual farmer docs with subcollection of 'experiments' containing link to experiment key and date enrolled.
+contains individual farmer docs with subcollection of 'experiments' and 'surveys' containing links to experiment and survey keys with date enrolled.
 
 - **Experiments**  
 contains master list of experiments with subcollection of 'farmers' containing link to farmer key and date enrolled
