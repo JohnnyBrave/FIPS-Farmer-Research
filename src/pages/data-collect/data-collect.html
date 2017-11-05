@@ -16,8 +16,8 @@
     <div class="my-research">
       <h2 item-left>
         <ion-icon name="flask" style="margin: 0 5px"></ion-icon>Current Trials</h2>
-      <ion-card *ngFor="let experiment of experiments">
-        <div *ngIf="enrolled[experiment._key]">
+      <div *ngFor="let experiment of experiments">
+        <ion-card *ngIf="enrolled[experiment._key]">
           <div class="experiment-title-bar">
             <div class="experiment-title">{{experiment.title}}</div>
             <button ion-button icon-only clear color="primary-dark-inverted" (click)="showExperimentDetail(experiment)">
@@ -28,22 +28,22 @@
             <button ion-button icon-left color="primary-dark-inverted" (click)="collectData(experiment)"><ion-icon name="clipboard"></ion-icon>Collect Data</button>
             <button ion-button icon-left color="primary-dark-inverted" (click)="viewResults(experiment)"><ion-icon name="stats"></ion-icon>View Results</button>
           </div>
-        </div>
-      </ion-card>
+        </ion-card>
+      </div>
     </div>
     <div class="available-experiments">
       <h2 item-left>
         <ion-icon name="apps" style="margin: 0 5px"></ion-icon>Available Experiments</h2>
-      <ion-card *ngFor="let experiment of experiments">
-        <div *ngIf="!enrolled[experiment._key]">
+      <div *ngFor="let experiment of experiments" style="padding-bottom:5px">
+        <ion-card *ngIf="!enrolled[experiment._key]">
           <div style="display: flex">
             <div class="experiment-title pointer"  (click)="showExperimentDetail(experiment)">{{experiment.title}}</div>
             <button ion-button icon-left color="primary-dark-inverted" (click)="enrolFarmer(experiment)">
               <ion-icon name="person-add"></ion-icon>Enrol
             </button>
           </div>
-        </div>
-      </ion-card>
+        </ion-card>
+      </div>
     </div>
 
   </div>

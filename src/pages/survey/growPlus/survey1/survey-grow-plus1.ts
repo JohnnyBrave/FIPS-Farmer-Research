@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicPage, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, LoadingController, Slides } from 'ionic-angular';
 import { DatabaseProvider, NotificationsProvider } from '../../../../providers/providers'
 
 @IonicPage()
@@ -14,9 +14,13 @@ export class SurveyGrowPlus1Page {
     part1: null,
     part2: null
   }
-  responses: any = { usedBefore: 'yes' }
+  responses: any = { usedBefore: null }
   surveyValid: boolean = true;
   questionMeta: any = {};
+  farmer:any;
+  survey:any;
+  submitted:boolean;
+  @ViewChild('surveySlides') surveySlides:Slides;
 
   constructor(
     public navCtrl: NavController,
@@ -27,7 +31,14 @@ export class SurveyGrowPlus1Page {
     public notificationsPrvdr: NotificationsProvider,
     private fb: FormBuilder
   ) {
+    this.farmer = navParams.data.farmer ? navParams.data.farmer : demoFarmer
+    this.survey = navParams.data.survey ? navParams.data.survey : demoSurvey
+    console.log('farmer',this.farmer,'survey',this.survey)
     this._setOptions()
+    this.formGroups.meta = this.fb.group({
+      "_farmerKey":this.farmer._key,
+      "_submissionDate":new Date()
+    })
     this.formGroups.part1 = this.fb.group({
       "Have you used GrowPlus before?": [this.responses.usedBefore, Validators.required],
     });
@@ -52,6 +63,27 @@ export class SurveyGrowPlus1Page {
   }
   continue(form){
     console.log('form',this.formGroups[form].value)
+  }
+  nextSlide(){
+    this.surveySlides.slideNext();
+  }
+  submit(){
+    let submission = Object.assign({},this.formGroups.meta.value,this.formGroups.part1.value, this.formGroups.part2.value);   
+    console.log('submission',submission) 
+    this.databasePrvdr.submitSurvey(this.farmer._key,this.survey._key, submission)
+    this.submitted=true
+  } 
+  viewResults(){
+    this.navCtrl.setPages([
+      {page:'WelcomePage'},
+      {page:'ResultsOverviewPage',params:{
+        survey:this.survey,
+        farmer:this.farmer
+      }}
+    ])
+  }
+  goHome(){
+    this.navCtrl.popToRoot()
   }
 
   _setOptions() {
@@ -113,4 +145,20 @@ export class SurveyGrowPlus1Page {
   }
 
 
+}
+
+var demoFarmer = {
+  "_key": "EZu8LTNcscrAN83kEZa3",
+  "displayName": "Example Farmer 1",
+  "firstName": "Example Farmer",
+  "householdCode": "Code001",
+  "lastName": "1"
+}
+
+var demoSurvey={
+  "_key": "8ft5LhC8t9Uo072m34px",
+  "description": "survey description",
+  "estimatedTime": "2017-11-03T06:30:00.000Z",
+  "surveyPage": "SurveyGrowPlus1Page",
+  "title": "Grow Plus Survey (part 1)"
 }

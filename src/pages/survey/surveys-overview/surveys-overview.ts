@@ -25,10 +25,12 @@ export class SurveysOverviewPage {
     // subscribe to farmer completed, push array of values into json object (capturing date completed)
     this.databasePrvdr.getSubCollection('Farmers', this.farmer._key, 'Surveys').subscribe(
       c => {
+        console.log('farmer completed',c)
         c.forEach(el => {
-          let key=Object.keys(el)[0]
-          this.farmerCompleted[key] = el[key].completed
+          let key=el['_key']
+          this.farmerCompleted[key] = el['completed']
         })
+        console.log('farmer completed',this.farmerCompleted)
     }
     )
   }
@@ -39,7 +41,7 @@ export class SurveysOverviewPage {
   }
   startSurvey(survey) {
     if (survey.hasOwnProperty('surveyPage')) {
-      this.navCtrl.push(survey.surveyPage)
+      this.navCtrl.push(survey.surveyPage, {farmer:this.farmer, experiment:this.experiment,survey:survey})
     }
   }
   test() {

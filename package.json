@@ -29,6 +29,8 @@
     "@ngx-translate/http-loader": "^2.0.0",
     "angular-4-data-table": "^0.2.3",
     "angularfire2": "^5.0.0-rc.3",
+    "chart.js": "^2.7.1",
+    "cordova-android": "~6.3.0",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^4.0.3",
@@ -40,11 +42,11 @@
     "promise-polyfill": "^6.0.2",
     "rxjs": "5.4.3",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18",
-    "cordova-android": "~6.3.0"
+    "zone.js": "0.8.18"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.0.0-201710161925",
+    "@types/chartjs": "0.0.31",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",

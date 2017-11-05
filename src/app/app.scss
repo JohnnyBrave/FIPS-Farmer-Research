@@ -51,7 +51,11 @@ p{
 .card, .card-md{
     background-color: white;
     padding: 5px;
-    margin: 0;
+    margin: 0 5px;
+    width: calc(100% - 10px);
+}
+.background-primary{
+    background-color:color($colors,primary)
 }
 
 // survey theming
@@ -74,11 +78,24 @@ p{
         color:rgba(0,0,0,0.7);
         margin-bottom:5px;
     }
+    .swiper-slide{
+        align-items: flex-start;
+        overflow-y: scroll;
+    }
+    .intro-slide{
+        align-items: center
+    }
+    .slide-heading{
+        background-color: color($colors,secondary);
+        padding: 5px;
+    }
     .sub-item{
         // list of select elements, indented and less spacing
         padding-left:32px;
+        
         .label{
             margin:0;
+            font-size: smaller;
         }
         .select{
             padding:0 8px 0 6px;

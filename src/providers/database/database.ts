@@ -38,9 +38,23 @@ export class DatabaseProvider {
   }
 
   addFarmer(data){
+    // create db entries and mark registration survey as completed (registration survey id hardcoded)
     const key = this.afs.createId();
     data._key=key
-    return this.afs.collection('Farmers').doc(key).set(data)
+    let batch = this.afs.firestore.batch();
+    let ref1 = this.afs.firestore.collection('Farmers').doc(key)
+    batch.set(ref1,data)
+    let ref2 = this.afs.firestore.collection('Farmers').doc(key).collection('Surveys').doc('3blD3GGrIzuuPjD47a08')
+    batch.set(ref2,{
+      _key:'3blD3GGrIzuuPjD47a08',
+      completed:new Date()
+    })
+    let ref3 = this.afs.firestore.collection('Surveys').doc('3blD3GGrIzuuPjD47a08').collection('Farmers').doc(key)
+    batch.set(ref3,{
+      _key:key,
+      completed:new Date()
+    })
+    return batch.commit()
   }
   enrolFarmerInExperiment(farmerKey,experimentKey){
     console.log('enrolling',farmerKey,experimentKey)
@@ -56,10 +70,20 @@ export class DatabaseProvider {
       _key:farmerKey,
       enrolled:new Date()
     });
-
     batch.commit()
     .then(_=>console.log('successfully updated'))
     .catch(err=>console.log('err',err))
+  }
+  submitSurvey(farmerKey,surveyKey, surveyData){
+    let batch = this.afs.firestore.batch();
+    let fRef=this.afs.firestore.collection('Farmers').doc(farmerKey).collection('Surveys').doc(surveyKey);
+    batch.set(fRef,{
+      _key:surveyKey,
+      completed:new Date()
+    })
+    let eRef= this.afs.firestore.collection('Surveys').doc(surveyKey).collection('Farmers').doc(farmerKey)
+    batch.set(eRef,surveyData);
+    return batch.commit()
   }
 
 
