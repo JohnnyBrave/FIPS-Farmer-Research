@@ -1,3 +1,20 @@
 page-experiment-results {
 
+    select:disabled{
+        opacity: 0.7;
+    }
+    .option-icon{
+        color:white; 
+        margin-right:2px;
+        width:18px;
+    }
+    select{
+        border: none;
+        background: none;
+        color:white;
+    }
+    
+    option{
+        color: black
+    }
 }

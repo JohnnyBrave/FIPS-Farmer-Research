@@ -19,7 +19,6 @@ export class NetworkResultsPage {
   networkGrowthData:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public databasePrvdr: DatabaseProvider) {
-    this.databasePrvdr.getCollection('Surveys')
     this._setInsights()
     this._getData()
   }

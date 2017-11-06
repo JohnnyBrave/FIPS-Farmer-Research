@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {DatabaseProvider} from '../../../providers/providers';
-import * as Chart from 'chart.js'
+import { DatabaseProvider } from '../../../providers/providers';
+// import * as Chart from 'chart.js'
+import { Chart } from 'angular-highcharts';
+
+
 
 @IonicPage()
 @Component({
@@ -9,36 +12,49 @@ import * as Chart from 'chart.js'
   templateUrl: 'experiment-results.html',
 })
 export class ExperimentResultsPage {
-  insights:any
+  insights: any
   canvas: any;
   ctx: any;
+  farmers: any;
+  surveys:any;
+  focusFarmerText: string = "Loading Farmers...";
+  focusFarmer: string = "_none";
+  activeInsight: string = "_none";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public databasePrvdr:DatabaseProvider) {
-    this.databasePrvdr.getCollection('Surveys')
+  constructor(public navCtrl: NavController, public navParams: NavParams, public databasePrvdr: DatabaseProvider) {
+    this._setInsights()
+    this._getData()
   }
 
-  ionViewDidLoad() {
-    this.canvas = document.getElementById('myChart');
-    this.ctx = this.canvas.getContext('2d');
-    let myChart = new Chart(this.ctx, {
-      type: 'pie',
-      data: {
-        labels: ["New", "In Progress", "On Hold"],
-        datasets: [{
-          label: '# of Votes',
-          data: [1, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: false,
-        display: true
+  _getData() {
+    // get list survey farmers then get their meta
+    // this.farmers = this.databasePrvdr.getSubCollection('Surveys', '3blD3GGrIzuuPjD47a08', "Farmers")
+    // testing only
+    this.databasePrvdr.getSubCollection('Surveys', '3blD3GGrIzuuPjD47a08', "Farmers")
+      .subscribe(r => {
+        this._getMeta(r)
+      })
+      this.surveys=this.databasePrvdr.getCollection('Surveys')
+  }
+  test() {
+    console.log('farmers', this.farmers)
+  }
+  _getMeta(farmers) {
+    // takes list of farmer object containing _key and completed field and returns farmer doc
+    console.log('farmers', farmers)
+    let keyArray = farmers.map(f => f._key)
+    this.databasePrvdr.getMultipleDocs('Farmers', keyArray).then(res => {
+      this.farmers = res
+      this.focusFarmerText = "select a farmer"
+    })
+  }
+
+  _setInsights() {
+    this.insights = [
+      {
+        title: 'Perceived effect of GroPlus on crops',
+        // chartData: networkGrowthTemplate
       }
-    });
+    ]
   }
 }
