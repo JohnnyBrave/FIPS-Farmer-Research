@@ -191,6 +191,16 @@
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@types/chartjs/-/chartjs-0.0.31.tgz#b16a687eaad3ea3e5cd3e961aee5a28e47b57949"
 
+"@types/geojson@*":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
+
+"@types/highcharts@^5.0.10":
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@types/highcharts/-/highcharts-5.0.10.tgz#378b02bee7f08d10821398830eab125d77f74eec"
+  dependencies:
+    "@types/geojson" "*"
+
 "@types/localforage@0.0.30":
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/localforage/-/localforage-0.0.30.tgz#3d60a6bf6dda38e3f8a469611598379f1f649509"
@@ -280,6 +290,10 @@ angular-4-data-table@^0.2.3:
     ts-node "~2.0.0"
     typescript "2.1.5"
     zone.js "^0.8.12"
+
+angular-highcharts@4:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/angular-highcharts/-/angular-highcharts-4.0.7.tgz#8985a09c2068eb1c3637860c667d397cb4bc0f59"
 
 angularfire2@^5.0.0-rc.3:
   version "5.0.0-rc.3"
@@ -693,7 +707,7 @@ chalk@^2.1.0:
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
 
-chart.js@^2.7.1:
+chart.js@^2.6.0, chart.js@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.7.1.tgz#ae90b4aa4ff1f02decd6b1a2a8dabfd73c9f9886"
   dependencies:
@@ -1681,6 +1695,10 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
+highcharts@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.0.2.tgz#e3c4c998a21ce6bfa79458fa2c87d967e9234abe"
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -1801,6 +1819,10 @@ ionic-angular@3.7.1:
 ionic-plugin-keyboard@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ionic-plugin-keyboard/-/ionic-plugin-keyboard-2.2.1.tgz#f2a9e169bbe9b5522400347c9fd6d3467ee3fa12"
+
+ionic2-super-tabs@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/ionic2-super-tabs/-/ionic2-super-tabs-4.1.4.tgz#e95f6585f247b9aec56333baca22080e4f0929cd"
 
 ionicons@3.0.0:
   version "3.0.0"
@@ -2380,6 +2402,12 @@ nan@^2.3.0, nan@^2.3.2:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+ng2-charts@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/ng2-charts/-/ng2-charts-1.6.0.tgz#108a2133ff62a8623895240fadbddbea2951f29d"
+  dependencies:
+    chart.js "^2.6.0"
 
 node-gyp@^3.3.1:
   version "3.6.2"

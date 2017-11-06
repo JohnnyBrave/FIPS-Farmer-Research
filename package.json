@@ -28,6 +28,7 @@
     "@ngx-translate/core": "8.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
     "angular-4-data-table": "^0.2.3",
+    "angular-highcharts": "4",
     "angularfire2": "^5.0.0-rc.3",
     "chart.js": "^2.7.1",
     "cordova-android": "~6.3.0",
@@ -36,9 +37,12 @@
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-whitelist": "^1.3.1",
     "firebase": "^4.6.0",
+    "highcharts": "^6.0.2",
     "ionic-angular": "3.7.1",
     "ionic-plugin-keyboard": "^2.2.1",
+    "ionic2-super-tabs": "^4.1.4",
     "ionicons": "3.0.0",
+    "ng2-charts": "^1.6.0",
     "promise-polyfill": "^6.0.2",
     "rxjs": "5.4.3",
     "sw-toolbox": "3.6.0",
@@ -47,6 +51,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "^3.0.0-201710161925",
     "@types/chartjs": "0.0.31",
+    "@types/highcharts": "^5.0.10",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",

@@ -1,15 +1,4 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Results</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <h2>Global Results</h2>
-  <canvas id="myChart" width="100%" height="100%"></canvas>
-  <h2>Survey Results</h2>
-
-</ion-content>
+<super-tabs>
+  <super-tab [root]="page1" title="Network" icon="globe"></super-tab>
+  <super-tab [root]="page2" title="Experiments" icon="flask"></super-tab>
+</super-tabs>

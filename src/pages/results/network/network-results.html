@@ -1,0 +1,31 @@
+<ion-content padding>
+  <div *ngIf="showIntro">
+    <p>In this section you can see some statistics and insights about the entire network</p>
+    <p>Choose an insight to explore from the dropdown menu</p>
+  </div>
+  <ion-list>
+    <ion-item word-wrap>
+      <ion-label>Insight</ion-label>
+      <!-- pass full insight as value to change function -->
+      <ion-select #i (ionChange)="insightChange(i.value)">
+        <ion-option *ngFor="let insight of insights" [value]="insight">{{insight.title}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div [chart]="chart" style="height:calc(100vh - 200px)"></div>
+
+  <!-- old binding for charts.js -->
+  <!-- <div *ngIf="!showIntro">
+    <h3>chart</h3>
+    <canvas baseChart
+    [datasets]="activeInsight.data"
+    [labels]="activeInsight.labels"
+    [options]="barChartOptions"
+    [legend]="barChartLegend"
+    [chartType]="activeInsight.chartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"></canvas>
+  </div> -->
+  
+</ion-content>

@@ -3,7 +3,6 @@
 - Ensure custom development datatables correctly implemented  
 - Ensure dev code commented out and prod code uncommented (e.g. ionViewCanEnter and data models)
 - Update version codes in `config.xml` and `welcome.html`  
-*(v 0.1.0 only - ensure all farmers moved to `_key` instead of `_id` and remove `_experiments`)*
 
 
 ## Development Notes
@@ -41,4 +40,8 @@ contains individual farmer docs with subcollection of 'experiments' and 'surveys
 
 - **Experiments**  
 contains master list of experiments with subcollection of 'farmers' containing link to farmer key and date enrolled
+
+## Graphs and charts
+A few different graph and charting packages have been experimented with. Decision came down to plotly, charts.js and highcharts. Whilst plotly is the only that also links to R and our wider ecosytem, it doesn't seem to have good integrations with angular. This could be tested in the future. Charts.js integrated well but it was evident they only have a limited number of charts, so instead opting for highcharts. Note, this could be changed in the future and also multiple packages used together if desired.   
+Good article here: https://blog.sicara.com/compare-best-javascript-chart-libraries-2017-89fbe8cb112d
 
