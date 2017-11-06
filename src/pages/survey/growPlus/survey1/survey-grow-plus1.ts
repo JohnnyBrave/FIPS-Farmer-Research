@@ -14,13 +14,14 @@ export class SurveyGrowPlus1Page {
     part1: null,
     part2: null
   }
-  responses: any = { usedBefore: null }
+  responses: any = { usedBefore: null, cropsSelected: [] }
+  formGenerated: any = {}
   surveyValid: boolean = true;
   questionMeta: any = {};
-  farmer:any;
-  survey:any;
-  submitted:boolean;
-  @ViewChild('surveySlides') surveySlides:Slides;
+  farmer: any;
+  survey: any;
+  submitted: boolean;
+  @ViewChild('surveySlides') surveySlides: Slides;
 
   constructor(
     public navCtrl: NavController,
@@ -33,11 +34,11 @@ export class SurveyGrowPlus1Page {
   ) {
     this.farmer = navParams.data.farmer ? navParams.data.farmer : demoFarmer
     this.survey = navParams.data.survey ? navParams.data.survey : demoSurvey
-    console.log('farmer',this.farmer,'survey',this.survey)
+    console.log('farmer', this.farmer, 'survey', this.survey)
     this._setOptions()
     this.formGroups.meta = this.fb.group({
-      "_farmerKey":this.farmer._key,
-      "_submissionDate":new Date()
+      "_farmerKey": this.farmer._key,
+      "_submissionDate": new Date()
     })
     this.formGroups.part1 = this.fb.group({
       "Have you used GrowPlus before?": [this.responses.usedBefore, Validators.required],
@@ -45,44 +46,66 @@ export class SurveyGrowPlus1Page {
     // fg2 dependent on yes answered to fg1
     this.formGroups.part2 = this.fb.group({
       "Used with": ['', Validators.required],
-      "Differences observed": this.fb.group({
-        "Germination and early growth":'',
-        "Vegetative growth":'',
-        "Vegetative harvest cowpeas":'',
-        "Flowering time":'',
-        "Podding cobbing time":'',
-        "Harvest":'',
-      }),
-      "Bought": ['', Validators.required],
     });
-
+    this.formGroups.part3 = this.fb.group({
+      // part 3 generated dynamically
+      "Differences observed": '',
+    });
+    
+    this.formGroups.part4 = this.fb.group({
+      "Bought":['',Validators.required]
+    })
   }
 
   preloadData() {
     // use this.formgroup.setValue to update all form fields. Useful if in editing mode
   }
-  continue(form){
-    console.log('form',this.formGroups[form].value)
+  continue(form) {
+    console.log('form', this.formGroups[form].value)
   }
-  nextSlide(){
+  nextSlide() {
     this.surveySlides.slideNext();
   }
-  submit(){
-    let submission = Object.assign({},this.formGroups.meta.value,this.formGroups.part1.value, this.formGroups.part2.value);   
-    console.log('submission',submission) 
-    this.databasePrvdr.submitSurvey(this.farmer._key,this.survey._key, submission)
-    this.submitted=true
-  } 
-  viewResults(){
+  setCrops() {
+    console.log('setting crops', this.responses.cropsSelected)
+    // dynamically build formgroups for repeat group
+    let subGroup = {}
+    for (let crop of this.responses.cropsSelected) {
+      subGroup[crop] = this.fb.group({
+        "Germination and early growth": '',
+        "Vegetative growth": '',
+        "Vegetative harvest cowpeas": '',
+        "Flowering time": '',
+        "Podding cobbing time": '',
+        "Harvest": '',
+      })
+    }
+    this.formGroups.part3 = this.fb.group({
+      "Differences observed": this.fb.group(subGroup)
+      })
+    // add binding so template wont render before creation
+    this.formGenerated.crops = true;
+    console.log('part 3', this.formGroups.part3)
+    this.surveySlides.slideNext()
+  }
+  submit() {
+    let submission = Object.assign({}, this.formGroups.meta.value, this.formGroups.part1.value, this.formGroups.part2.value, this.formGroups.part3.value, this.formGroups.part4.value);
+    console.log('submission', submission)
+    this.databasePrvdr.submitSurvey(this.farmer._key, this.survey._key, submission)
+    this.submitted = true
+  }
+  viewResults() {
     this.navCtrl.setPages([
-      {page:'WelcomePage'},
-      {page:'ResultsOverviewPage',params:{
-        survey:this.survey,
-        farmer:this.farmer
-      }}
+      { page: 'WelcomePage' },
+      {
+        page: 'ResultsOverviewPage', params: {
+          survey: this.survey,
+          farmer: this.farmer
+        }
+      }
     ])
   }
-  goHome(){
+  goHome() {
     this.navCtrl.popToRoot()
   }
 
@@ -117,7 +140,7 @@ export class SurveyGrowPlus1Page {
           ]
         },
         {
-          value: 'Vegetative harvest cowpeas', label: 'Vegetative harvest if cowpeas', subOptions: [
+          value: 'Vegetative harvest cowpeas', label: 'Vegetative harvest (if cowpeas)', subOptions: [
             { value: 'more leaves', label: 'more leaves' },
             { value: 'fewer leaves', label: 'fewer leaves' },
           ]
@@ -155,7 +178,7 @@ var demoFarmer = {
   "lastName": "1"
 }
 
-var demoSurvey={
+var demoSurvey = {
   "_key": "8ft5LhC8t9Uo072m34px",
   "description": "survey description",
   "estimatedTime": "2017-11-03T06:30:00.000Z",

@@ -66,7 +66,7 @@ export function provideSettings(storage: Storage) {
     }),
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    SuperTabsModule.forRoot()
+    SuperTabsModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

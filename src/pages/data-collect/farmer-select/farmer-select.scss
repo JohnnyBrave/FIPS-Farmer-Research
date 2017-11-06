@@ -10,4 +10,19 @@ page-farmer-select {
         margin:4px!important;
         flex:1
     }
+    .sort-field{
+        display: inline;
+        font-weight: 700;
+    }
+    .heading-row{
+        border-bottom: 2px solid black;
+    }
+    .row{
+        border-bottom: 1px solid rgba(0,0,0,0.5); 
+    }
+    .farmer-row{
+        :hover{
+            background-color:color($colors,secondary-light)
+        }
+    }
 }

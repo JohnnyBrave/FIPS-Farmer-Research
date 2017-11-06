@@ -31,10 +31,7 @@ export class NetworkResultsPage {
     // bind to farmer registration survey for data
     this.databasePrvdr.getSubCollection('Surveys','3blD3GGrIzuuPjD47a08',"Farmers")
     .subscribe(
-      f=>{
-        console.log('registered farmers',f)
-        this._calculateTimeSeries(f,'completed')
-      }
+      f=>{this._calculateTimeSeries(f,'completed')}
     )
   }
   _calculateTimeSeries(data, field){
@@ -44,6 +41,7 @@ export class NetworkResultsPage {
     data.forEach((el,i) => {
       let timestamp:Date = el[field]
       let datestring = timestamp.toDateString()
+      console.log('dateString',datestring)
       dailyTotals[datestring] = dailyTotals[datestring] ? dailyTotals[datestring] +1 : 1
       runningTotals[datestring] = i+1
     });
@@ -54,17 +52,16 @@ export class NetworkResultsPage {
     this.insights[0].chartData.series[0].data=this.networkGrowthData
   }
   _jsonToDateArray(json){
-    // takes json with datestring key : value pairs and pushes to array items
+    // takes json with datestring key : value pairs and pushes to array items with utc date object for highcharts
     let arr = []
     for(let key in json){
       if(json.hasOwnProperty(key)){
-        let dateObject = Date.parse(key)
+        let dateObject = new Date(Date.parse(key))
+        let utc = Date.UTC(dateObject.getFullYear(),dateObject.getMonth(),dateObject.getDay())
         let val = json[key]
-        console.log('dateObject',dateObject)
-        arr.push([dateObject,val])
+        arr.push([utc,val])
       }      
     }
-    console.log('arr',arr)
     return arr
   }
 

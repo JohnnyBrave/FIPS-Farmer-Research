@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular'
-import { Api } from '../api/api';
+import { NotificationsProvider } from '../notifications/notifications';
 // auth
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection  } from 'angularfire2/firestore';
@@ -15,7 +15,7 @@ export class UserProvider {
   private obsCollection:AngularFirestoreCollection<any>
   items: Observable<any[]>;
 
-  constructor(public api: Api, public events: Events, private afAuth: AngularFireAuth, private afs:AngularFirestore) {
+  constructor(public notifications: NotificationsProvider, public events: Events, private afAuth: AngularFireAuth, private afs:AngularFirestore) {
     console.log('user provider loaded')
     this._registerLoginListener()
 
@@ -78,6 +78,7 @@ export class UserProvider {
         // User is signed in.
         console.log('user signed in', user)
         this.user = user
+        this.notifications.showToast('Signed in as '+user.displayName)
         this.events.publish('user:signedIn', user)
       }
       else {

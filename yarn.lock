@@ -2409,6 +2409,10 @@ ng2-charts@^1.6.0:
   dependencies:
     chart.js "^2.6.0"
 
+ngx-order-pipe@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ngx-order-pipe/-/ngx-order-pipe-1.0.4.tgz#f71775ad1543aef2bb507fb79425866dd4d3c641"
+
 node-gyp@^3.3.1:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-3.6.2.tgz#9bfbe54562286284838e750eac05295853fa1c60"

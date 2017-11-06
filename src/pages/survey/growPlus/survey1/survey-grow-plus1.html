@@ -13,7 +13,7 @@
       <ion-card style="flex:1">
         <form [formGroup]="formGroups.part1">
           <ion-item text-wrap>
-            <ion-label>Have you used GrowPlus before?</ion-label>
+            <ion-label>*Have you used GrowPlus before?</ion-label>
             <ion-select formControlName="Have you used GrowPlus before?" [(ngModel)]="responses.usedBefore">
               <ion-option value="yes">Yes</ion-option>
               <ion-option value="no">No</ion-option>
@@ -25,52 +25,80 @@
     </ion-slide>
 
     <ion-slide *ngIf="responses.usedBefore=='yes'">
-        <div class="slide-heading">Section 2</div>
+      <div class="slide-heading">Section 2</div>
       <ion-card>
         <form [formGroup]="formGroups.part2" *ngIf="responses.usedBefore">
           <ion-item text-wrap>
-            <ion-label>What did you use it with?</ion-label>
-            <ion-select formControlName="Used with" multiple>
+            <ion-label>*What did you use it with?</ion-label>
+            <ion-select formControlName="Used with" multiple [(ngModel)]="responses.cropsSelected">
               <ion-option *ngFor="let option of questionMeta['Used with'].options" [value]="option.value">
                 {{option.label}}
               </ion-option>
             </ion-select>
           </ion-item>
-          <div class="question">What differences did you observe after treating with GroPlus?</div>
-          <div class="hint">Listen to response and mark relevant</div>
-          <div formGroupName="Differences observed">
-            <div *ngFor="let difference of questionMeta['Differences observed'].options">
-              <ion-item text-wrap class="sub-item">
-                <ion-label>{{difference.label}}</ion-label>
-                <ion-select [formControlName]="difference.value">
-                  <ion-option *ngFor="let option of difference.subOptions" [value]="option.value">{{option.label}}</ion-option>
-                </ion-select>
-              </ion-item>
-            </div>
-          </div>
-          <ion-item text-wrap>
-              <ion-label>After trying GroPlus did you buy it?</ion-label>
-              <ion-select formControlName="Bought">
-                <ion-option value="yes">Yes</ion-option>
-                <ion-option value="no">No</ion-option>
-              </ion-select>
-            </ion-item>
         </form>
       </ion-card>
-      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroups.part2.valid">Continue</button>      
+      <div *ngFor="let crop of responses.cropsSelected"></div>
+      <button ion-button (click)="setCrops()" style="margin-top:20px" block color="primary" [disabled]="!formGroups.part2.valid">Continue</button>
+    </ion-slide>
+
+    <ion-slide *ngFor="let crop of responses.cropsSelected">
+      <div class="slide-heading">{{crop}}</div>
+      <ion-card>
+        <form [formGroup]="formGroups.part3" *ngIf="formGenerated.crops">
+          <div class="question">Ask the farmer if they noticed any differences with their
+            <strong>{{crop}}</strong> after treating with GroPlus</div>
+          <div class="hint">Listen to response and mark relevant</div>
+          <div formGroupName="Differences observed">
+            <!-- <ion-input formControlName="test"></ion-input> -->
+            <div [formGroupName]="crop">
+              <div *ngFor="let difference of questionMeta['Differences observed'].options">
+                <ion-item text-wrap class="sub-item">
+                  <ion-label>{{difference.label}}</ion-label>
+                  <ion-select [formControlName]="difference.value">
+                    <ion-option *ngFor="let option of difference.subOptions" [value]="option.value">{{option.label}}</ion-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+          </div>
+        </form>
+      </ion-card>
+      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary">Continue</button>
+    </ion-slide>
+
+    <ion-slide *ngIf="responses.usedBefore=='yes'">
+      <div class="slide-heading">Section 4</div>
+      <ion-card>
+        <form [formGroup]="formGroups.part4">
+          <ion-item text-wrap>
+            <ion-label>*After trying GroPlus did you buy it?</ion-label>
+            <ion-select formControlName="Bought">
+              <ion-option value="yes">Yes</ion-option>
+              <ion-option value="no">No</ion-option>
+            </ion-select>
+          </ion-item>
+        </form>
+      </ion-card>
+      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroups.part4.valid">Continue</button>
+      
     </ion-slide>
 
 
 
 
-    <ion-slide *ngIf="responses.usedBefore=='no' || (formGroups.part1.valid && formGroups.part2.valid)">
+
+    <ion-slide *ngIf="responses.usedBefore=='no' || (formGroups.part1.valid && formGroups.part2.valid && formGroups.part4.valid)">
       <h1>Survey Complete</h1>
       <p *ngIf="!submitted">You can swipe back through the slides to review, or click below to submit</p>
       <p *ngIf="submitted">Thank you for your submission</p>
-      <button *ngIf="!submitted" ion-button icon-left (click)="submit()"><ion-icon name="done-all"></ion-icon>Submit</button>
-      <button *ngIf="submitted" ion-button icon-left color="secondary" (click)="viewResults()"><ion-icon name="stats"></ion-icon>View Results</button>
-      <button *ngIf="submitted" ion-button icon-left (click)="goHome()"><ion-icon name="home"></ion-icon>Go Home</button>
-      
+      <button *ngIf="!submitted" ion-button icon-left (click)="submit()">
+        <ion-icon name="done-all"></ion-icon>Submit</button>
+      <button *ngIf="submitted" ion-button icon-left color="secondary" (click)="viewResults()">
+        <ion-icon name="stats"></ion-icon>View Results</button>
+      <button *ngIf="submitted" ion-button icon-left (click)="goHome()">
+        <ion-icon name="home"></ion-icon>Go Home</button>
+
     </ion-slide>
 
   </ion-slides>

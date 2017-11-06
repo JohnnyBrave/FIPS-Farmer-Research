@@ -16,6 +16,7 @@ export class FarmerSelectPage {
   // farmersTable = new DataTableResource(this.farmers);
   items = [];
   itemCount = 0;
+  sortField:string="householdCode"
 
   constructor(public navCtrl: NavController, public userPrvdr: UserProvider, public events: Events, public databasePrvdr:DatabaseProvider) {
     this.user=this.userPrvdr.user ? this.userPrvdr.user : {displayName:''}
@@ -46,6 +47,9 @@ export class FarmerSelectPage {
   addFarmer(){
     console.log('adding farmer')
     this.navCtrl.push('NewFarmerRegistrationPage')
+  }
+  sort(field){
+    this.sortField=field
   }
 
   reloadItems(e){
