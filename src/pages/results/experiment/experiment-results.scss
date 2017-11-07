@@ -17,4 +17,26 @@ page-experiment-results {
     option{
         color: black
     }
+    // .cell{
+    //     border:1px solid black;
+    //     padding:2px;
+    // }
+    .diff-label{
+        width:100px;
+    }
+    .option-label{
+        width:250px;
+    }
+    .infographic, .option-label, .diff-label{
+        border: 1px solid black;
+        display: table-cell;
+        border-collapse: collapse;
+        padding:2px;
+    }
+    .crop-title{
+        text-align: center;
+        margin:15px 0 5px 0;
+        font-size: large;
+        font-weight: 700;
+    }
 }

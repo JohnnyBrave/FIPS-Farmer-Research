@@ -16,7 +16,7 @@ export class NetworkResultsPage {
   showIntro: boolean = true;
   chart: any;
   activeInsight: any;
-  networkGrowthData:any;
+  networkGrowthData: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public databasePrvdr: DatabaseProvider) {
     this._setInsights()
@@ -26,40 +26,52 @@ export class NetworkResultsPage {
   ionViewDidEnter() {
 
   }
-  _getData(){
+  _getData() {
     // bind to farmer registration survey for data
-    this.databasePrvdr.getSubCollection('Surveys','3blD3GGrIzuuPjD47a08',"Farmers")
-    .subscribe(
-      f=>{this._calculateTimeSeries(f,'completed')}
-    )
+    this.databasePrvdr.getSubCollection('Surveys', '3blD3GGrIzuuPjD47a08', "Farmers")
+      .subscribe(
+      f => { this._calculateTimeSeries(f, 'completed') }
+      )
   }
-  _calculateTimeSeries(data, field){
+  _calculateTimeSeries(data, field) {
     // takes data array with timestamp field values and pushes to seperate total and cumulative objects
-    let dailyTotals={}
-    let runningTotals={}
-    data.forEach((el,i) => {
-      let timestamp:Date = el[field]
+    let dailyTotals = {}
+    let runningTotals = {}
+    let i = 1
+    data.forEach((el) => {
+      let timestamp: Date = el[field]
       let datestring = timestamp.toDateString()
-      console.log('dateString',datestring)
-      dailyTotals[datestring] = dailyTotals[datestring] ? dailyTotals[datestring] +1 : 1
-      runningTotals[datestring] = i+1
+      // use utc to force into correct order by date
+      let utc = Date.parse(datestring)
+      dailyTotals[utc] = dailyTotals[utc] ? dailyTotals[utc] + 1 : 1
     });
-    this.networkGrowthData=this._jsonToDateArray(runningTotals)
-    console.log('daily totals',dailyTotals)
-    console.log('running totals',runningTotals)
+    // sort utc numerically
+    let keys = Object.keys(dailyTotals)
+    keys = keys.sort()
+    let sortedDailyTotals={}
+    for(let k of keys){sortedDailyTotals[k]=dailyTotals[k]}
+    let running = 0
+    for (let key in sortedDailyTotals) {
+      if (dailyTotals.hasOwnProperty(key)) {
+        runningTotals[key] = dailyTotals[key] + running
+        running = runningTotals[key]
+      }
+    }
+    this.networkGrowthData = this._jsonToDateArray(runningTotals)
     // update network growth for real data
-    this.insights[0].chartData.series[0].data=this.networkGrowthData
+    this.insights[0].chartData.series[0].data = this.networkGrowthData
   }
-  _jsonToDateArray(json){
-    // takes json with datestring key : value pairs and pushes to array items with utc date object for highcharts
+  _jsonToDateArray(json) {
+    // takes json with utc key : value pairs and pushes to array items with utc date object for highcharts
     let arr = []
-    for(let key in json){
-      if(json.hasOwnProperty(key)){
-        let dateObject = new Date(Date.parse(key))
-        let utc = Date.UTC(dateObject.getFullYear(),dateObject.getMonth(),dateObject.getDay())
+    for (let key in json) {
+      if (json.hasOwnProperty(key)) {
         let val = json[key]
-        arr.push([utc,val])
-      }      
+        let epoch = parseInt(key)
+        let dateObject = new Date(epoch)
+        let dateFormatted=Date.UTC(dateObject.getUTCFullYear(),dateObject.getUTCMonth(),dateObject.getUTCDate())
+        arr.push([dateFormatted, val])
+      }
     }
     return arr
   }
@@ -80,13 +92,13 @@ export class NetworkResultsPage {
 
   _setInsights() {
     this.insights = [
-    {
-      title: 'Network Growth',
-      chartData: networkGrowthTemplate
-    }
+      {
+        title: 'Network Growth',
+        chartData: networkGrowthTemplate
+      }
     ]
   }
-  
+
 }
 
 var testData1: any = {

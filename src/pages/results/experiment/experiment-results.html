@@ -3,7 +3,9 @@
     <ion-row>
       <ion-col>
         <div style="display:flex">
-          <div class="option-icon"><ion-icon name="person" ></ion-icon></div>
+          <div class="option-icon">
+            <ion-icon name="person"></ion-icon>
+          </div>
           <select [(ngModel)]="focusFarmer" [disabled]="!this.farmers">
             <option value="_none" disabled selected>{{focusFarmerText}}</option>
             <option *ngFor="let farmer of farmers | orderBy:'displayName'" [value]="farmer._key">{{farmer.displayName}}</option>
@@ -12,7 +14,9 @@
       </ion-col>
       <ion-col>
         <div style="display:flex">
-          <div class="option-icon"><ion-icon name="help" class="option-icon"></ion-icon></div>
+          <div class="option-icon">
+            <ion-icon name="help" class="option-icon"></ion-icon>
+          </div>
           <select [(ngModel)]="activeInsight" [disabled]="!this.insights">
             <option value="_none" disabled selected>Select Insight</option>
             <option *ngFor="let insight of insights | orderBy:'title'" [value]="insight.title">{{insight.title}}</option>
@@ -22,12 +26,30 @@
     </ion-row>
   </ion-grid>
 
+  <!-- Custom vis for perceived benefits -->
 
+  <ion-card *ngIf="activeInsight=='Perceived effect of GroPlus on crops'">
+    <h2>What did other farmers think?</h2>
+    <div *ngFor="let crop of this.groPlusSurveyMeta['Used with'].options">
+      <div class="crop-title">{{crop.value}}</div>
+      <div *ngFor="let d of groPlusSurveyMeta['Differences observed'].options" class="cell" style="display: flex">
+        <div class="diff-label">{{d.label}}</div>
+        <div>
+          <ion-grid style="padding-left:2px">
+              <ion-row *ngFor="let option of d.subOptions">
+                  <ion-col class="option-label">{{option.label}}</ion-col>
+                  <ion-col class="infographic">
+                    {{collatedTemplate[crop.value][d.value][option.value].length}}
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+          
+        </div>
 
-  <ion-card>
+      </div>
+    </div>
 
   </ion-card>
-  <button ion-button (click)="test()">Test</button>
 
   <!-- <canvas id="myChart" width="100%" height="100%"></canvas> -->
 </ion-content>

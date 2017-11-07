@@ -63,7 +63,8 @@ var demoExperiment = {
   "description": "Farmers planted beans, green grams and cowpeas with deep tillage on three benches of their farm (fertile, moderate, infertile). Each crop had a 5 x 5 m plot with GroPlus compared to a 5 x 5 m plot without GroPlus. The aim is to help farmers consider how they can maximize production potential of legumes on parts of their farm with different fertility levels.",
   "surveys": {
     "8ft5LhC8t9Uo072m34px": true,
-    "3blD3GGrIzuuPjD47a08": true
+    "3blD3GGrIzuuPjD47a08": true,
+    "R2OZwvCulWBsnsRLiiYM": false
   },
   "title": "Legumes with and without GroPlus on benches of different fertilities"
 }
