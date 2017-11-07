@@ -2,6 +2,8 @@
 ## 0.1.3
 - farmer select table with sort
 - groPlus survey repeat group based on crop selected
+- groPlus results simple vis (responses by crop)
+- experiments results page binding to survey results and farmers
 
 ## 0.1.2
 Results and visualisations improvements including:
