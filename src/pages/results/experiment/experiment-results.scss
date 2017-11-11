@@ -8,6 +8,10 @@ page-experiment-results {
         margin-right:2px;
         width:18px;
     }
+    .diff-label{
+        width:100px;
+        background-color: wheat
+    }
     select{
         border: none;
         background: none;
@@ -17,26 +21,38 @@ page-experiment-results {
     option{
         color: black
     }
-    // .cell{
-    //     border:1px solid black;
-    //     padding:2px;
-    // }
-    .diff-label{
-        width:100px;
-    }
+
     .option-label{
-        width:250px;
+        min-width:100px;
+        flex:0
     }
     .infographic, .option-label, .diff-label{
         border: 1px solid black;
+        border-top: none;
         display: table-cell;
         border-collapse: collapse;
         padding:2px;
+        border-right: none;
+    }
+    .diff-label{
+        border-top: 1px solid black
     }
     .crop-title{
         text-align: center;
         margin:15px 0 5px 0;
         font-size: large;
         font-weight: 700;
+    }
+    .grid{
+        padding: 0px;
+        border-left: none;
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+    }
+    .info-icon{
+        display: inline
+    }
+    .focus-farmer{
+        color:color($colors,secondary-dark)
     }
 }

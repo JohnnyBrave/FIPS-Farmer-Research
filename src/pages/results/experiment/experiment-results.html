@@ -1,5 +1,5 @@
-<ion-content padding>
-  <ion-grid>
+<ion-content >
+  <ion-grid padding>
     <ion-row>
       <ion-col>
         <div style="display:flex">
@@ -32,23 +32,26 @@
     <h2>What did other farmers think?</h2>
     <div *ngFor="let crop of this.groPlusSurveyMeta['Used with'].options">
       <div class="crop-title">{{crop.value}}</div>
-      <div *ngFor="let d of groPlusSurveyMeta['Differences observed'].options" class="cell" style="display: flex">
+      <div *ngFor="let d of groPlusSurveyMeta['Differences observed'].options" style="display: flex; margin-bottom:5px">
         <div class="diff-label">{{d.label}}</div>
-        <div>
-          <ion-grid style="padding-left:2px">
-              <ion-row *ngFor="let option of d.subOptions">
-                  <ion-col class="option-label">{{option.label}}</ion-col>
-                  <ion-col class="infographic">
-                    {{collatedTemplate[crop.value][d.value][option.value].length}}
-                  </ion-col>
-              </ion-row>
-          </ion-grid>
-          
-        </div>
-
+        <ion-grid style="flex:1">
+          <ion-row *ngFor="let option of d.subOptions">
+            <ion-col class="option-label">{{option.label}}</ion-col>
+            <ion-col class="infographic" style="flex:1">
+              <div class="info-icon" *ngFor="let i of collatedResults['Differences observed'][crop.value][d.value][option.value]">
+                  <ion-icon *ngIf="i==focusFarmer" class="focus-farmer" name="person" (click)="iconClick(i)"></ion-icon>
+                  <ion-icon *ngIf="i!=focusFarmer" name="person" (click)="iconClick(i)"></ion-icon>
+              </div>
+              
+              <!-- {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}} -->
+            </ion-col>
+            <ion-col style="flex:0; border-left:1px solid black; border-bottom:1px solid black">
+              {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
     </div>
-
   </ion-card>
 
   <!-- <canvas id="myChart" width="100%" height="100%"></canvas> -->
