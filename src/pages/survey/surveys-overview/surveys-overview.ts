@@ -60,7 +60,11 @@ export class SurveysOverviewPage {
       }
     }
     else if (survey.hasOwnProperty('surveyPage')) {
-
+      this.navCtrl.push(survey.surveyPage, {
+        farmer: this.farmer,
+        experiment: this.experiment,
+        survey: survey,
+      })
     }
   }
   test() {
