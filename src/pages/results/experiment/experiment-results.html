@@ -1,4 +1,5 @@
-<ion-content >
+<ion-content>
+  <collated-results-table [meta]="insightMeta"></collated-results-table>
   <ion-grid padding>
     <ion-row>
       <ion-col>
@@ -35,22 +36,24 @@
       <div *ngFor="let d of groPlusSurveyMeta['Differences observed'].options" style="display: flex; margin-bottom:5px">
         <div class="diff-label">{{d.label}}</div>
         <ion-grid style="flex:1">
-          <ion-row *ngFor="let option of d.subOptions">
-            <ion-col class="option-label">{{option.label}}</ion-col>
-            <ion-col class="infographic" style="flex:1">
-              <div class="info-icon" *ngFor="let i of collatedResults['Differences observed'][crop.value][d.value][option.value]">
+          <div *ngFor="let option of d.subOptions">
+            <!-- hide empty value option -->
+            <ion-row *ngIf="option.value!=''">
+              <ion-col class="option-label">{{option.label}}</ion-col>
+              <ion-col class="infographic" style="flex:1">
+                <div class="info-icon" *ngFor="let i of collatedResults['Differences observed'][crop.value][d.value][option.value]">
                   <ion-icon *ngIf="i==focusFarmer" class="focus-farmer" name="person" (click)="iconClick(i)"></ion-icon>
                   <ion-icon *ngIf="i!=focusFarmer" name="person" (click)="iconClick(i)"></ion-icon>
-              </div>
-              
-              <!-- {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}} -->
-            </ion-col>
-            <ion-col style="flex:0; border-left:1px solid black; border-bottom:1px solid black">
-              {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
+                </div>
+                <!-- {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}} -->
+              </ion-col>
+              <ion-col style="flex:0; border-left:1px solid black; border-bottom:1px solid black">
+                {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}}
+              </ion-col>
+            </ion-row>
+          </div>
+      </ion-grid>
+    </div>
     </div>
   </ion-card>
 

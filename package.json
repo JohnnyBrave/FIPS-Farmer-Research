@@ -39,6 +39,7 @@
     "firebase": "^4.6.0",
     "highcharts": "^6.0.2",
     "ionic-angular": "3.7.1",
+    "ionic-img-viewer": "2.7.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionic2-super-tabs": "^4.1.4",
     "ionicons": "3.0.0",

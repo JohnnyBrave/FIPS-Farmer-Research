@@ -4,8 +4,17 @@
     <ion-slide class="background-primary intro-slide">
       <h2>Grow Plus Survey</h2>
       <h3>Part 1</h3>
-      <!-- <p>In this survey you will record basic information related to the use of Grow Plus</p> -->
-      <button ion-button (click)="nextSlide()" color="secondary">Start</button>
+
+      <button ion-button icon-left (click)="nextSlide()" color="secondary">
+        <span *ngIf="!editKey">Start</span>
+        <ion-icon name="create" *ngIf="editKey"></ion-icon>
+        <span *ngIf="editKey">Edit Saved Submission</span>
+      </button>
+      <div class="swipe">
+        <div>Swipe forward or click to start</div>
+        <br>
+        <img src="assets/img/swipe-left.png">
+      </div>
     </ion-slide>
 
     <ion-slide>
@@ -49,16 +58,22 @@
           <div class="question">Ask the farmer if they noticed any differences with their
             <strong>{{crop}}</strong> after treating with GroPlus</div>
           <div class="hint">Listen to response and mark relevant</div>
+
           <div formGroupName="Differences observed">
             <!-- <ion-input formControlName="test"></ion-input> -->
             <div [formGroupName]="crop">
               <div *ngFor="let difference of questionMeta['Differences observed'].options">
-                <ion-item text-wrap class="sub-item">
-                  <ion-label>{{difference.label}}</ion-label>
-                  <ion-select [formControlName]="difference.value">
-                    <ion-option *ngFor="let option of difference.subOptions" [value]="option.value">{{option.label}}</ion-option>
-                  </ion-select>
-                </ion-item>
+                <div style="display: flex" *ngIf="showQuestion(difference,crop)">
+                  <div class="preview-image-container" *ngIf="difference.image">
+                    <img [src]="difference.image" class="preview-image" imageViewer>
+                  </div>
+                  <ion-item text-wrap class="sub-item">
+                    <ion-label>{{difference.label}}</ion-label>
+                    <ion-select [formControlName]="difference.value">
+                      <ion-option *ngFor="let option of difference.subOptions" [value]="option.value">{{option.label}}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
               </div>
             </div>
           </div>
@@ -81,7 +96,7 @@
         </form>
       </ion-card>
       <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroups.part4.valid">Continue</button>
-      
+
     </ion-slide>
 
 
@@ -92,12 +107,16 @@
       <h1>Survey Complete</h1>
       <p *ngIf="!submitted">You can swipe back through the slides to review, or click below to submit</p>
       <p *ngIf="submitted">Thank you for your submission</p>
+      <div class="swipe">
+        <img src="assets/img/swipe-both.png">
+      </div>
       <button *ngIf="!submitted" ion-button icon-left (click)="submit()">
         <ion-icon name="done-all"></ion-icon>Submit</button>
       <button *ngIf="submitted" ion-button icon-left color="secondary" (click)="viewResults()">
         <ion-icon name="stats"></ion-icon>View Results</button>
       <button *ngIf="submitted" ion-button icon-left (click)="goHome()">
         <ion-icon name="home"></ion-icon>Go Home</button>
+
 
     </ion-slide>
 

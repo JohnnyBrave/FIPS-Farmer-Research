@@ -38,5 +38,8 @@
 
   </ion-list>
   <br>
-  <button #submit ion-button full color="secondary-dark" (click)="register()" style="margin-bottom:30px" [disabled]="formgroup.status!='VALID'">Register</button>
+  <button #submit ion-button full color="secondary-dark" (click)="register()" style="margin-bottom:30px" [disabled]="formgroup.status!='VALID'">
+    <span *ngIf="!editKey">Register</span>
+    <span *ngIf="editKey">Save Changes</span>
+  </button>
 </ion-content>

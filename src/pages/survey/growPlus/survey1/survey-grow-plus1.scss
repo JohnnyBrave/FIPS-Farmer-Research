@@ -10,4 +10,22 @@ page-survey-grow-plus1 {
         color:color($colors,primary);
         padding:5px;
     }
+    .preview-image{
+        width:100%;
+    }
+    .preview-image-container{
+        width:80px;
+        margin-right: -20px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .swipe{
+        color:rgba(255,255,255,0.9);
+        margin:20px 0;
+        img{
+            max-height: 80px;
+        }
+    }
 }

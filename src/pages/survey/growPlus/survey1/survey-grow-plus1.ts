@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Events, LoadingController, Slides } from 'ionic-angular';
 import { DatabaseProvider, NotificationsProvider } from '../../../../providers/providers'
+import surveyMeta from './surveyMeta'
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class SurveyGrowPlus1Page {
   farmer: any;
   survey: any;
   submitted: boolean;
+  editKey: string;
   @ViewChild('surveySlides') surveySlides: Slides;
 
   constructor(
@@ -30,7 +32,9 @@ export class SurveyGrowPlus1Page {
     public loadingCtrl: LoadingController,
     public databasePrvdr: DatabaseProvider,
     public notificationsPrvdr: NotificationsProvider,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+
   ) {
     this.farmer = navParams.data.farmer ? navParams.data.farmer : demoFarmer
     this.survey = navParams.data.survey ? navParams.data.survey : demoSurvey
@@ -51,14 +55,40 @@ export class SurveyGrowPlus1Page {
       // part 3 generated dynamically
       "Differences observed": '',
     });
-    
+
     this.formGroups.part4 = this.fb.group({
-      "Bought":['',Validators.required]
+      "Bought": ['', Validators.required]
     })
+
+  }
+  ionViewDidEnter() {
+    if (this.navParams.data.existing) {
+      this.editKey = this.navParams.data.existing._farmerKey
+      console.log('editing submission', this.editKey)
+      this.preloadData(this.navParams.data.existing)
+    }
   }
 
-  preloadData() {
+  preloadData(data) {
     // use this.formgroup.setValue to update all form fields. Useful if in editing mode
+    for (let part in this.formGroups) {
+      if (this.formGroups.hasOwnProperty(part)) {
+        let group = this.formGroups[part]
+        let values = group.value
+        let update = values
+        for (let key in values) {
+          if (data.hasOwnProperty(key)) {
+            update[key] = data[key]
+          }
+        }
+        this.formGroups[part].setValue(update)
+      }
+      // update detection reference for dev error (changed after checked)
+      this.cdr.detectChanges()
+    }
+    // extra method for crops selected
+   
+    console.log('formgroups', this.formGroups)
   }
   continue(form) {
     console.log('form', this.formGroups[form].value)
@@ -70,22 +100,37 @@ export class SurveyGrowPlus1Page {
     console.log('setting crops', this.responses.cropsSelected)
     // dynamically build formgroups for repeat group
     let subGroup = {}
-    for (let crop of this.responses.cropsSelected) {
-      subGroup[crop] = this.fb.group({
-        "Germination and early growth": '',
-        "Vegetative growth": '',
-        "Vegetative harvest cowpeas": '',
-        "Flowering time": '',
-        "Podding cobbing time": '',
-        "Harvest": '',
-      })
+    let baseQuestions = {
+      "Germination and early growth": '',
+      "Vegetative growth": '',
+      "Vegetative harvest cowpeas": '',
+      "Flowering time": '',
+      "Podding cobbing time": '',
+      "Harvest": '',
     }
+    for (let crop of this.responses.cropsSelected) {
+      subGroup[crop] = this.fb.group(baseQuestions)
+    }
+    // get saved values
+    let saved={}
+    if(this.editKey){saved = this.formGroups.part3.value}
+    // init base (always)
     this.formGroups.part3 = this.fb.group({
       "Differences observed": this.fb.group(subGroup)
-      })
+    })
+    // set saved values, iterate over json in case new crops added
+    let update ={}
+    console.log('saved',saved)
+    console.log('formgroup',this.formGroups.part3)
+    for(let crop in this.formGroups.part3.value["Differences observed"]){
+      update[crop]=this.formGroups.part3.value["Differences observed"][crop]
+      if(saved["Differences observed"][crop]){update[crop]=saved["Differences observed"][crop]}
+    }
+    console.log('update',update)
+    this.formGroups.part3.setValue({"Differences observed":update})
+    
     // add binding so template wont render before creation
     this.formGenerated.crops = true;
-    console.log('part 3', this.formGroups.part3)
     this.surveySlides.slideNext()
   }
   submit() {
@@ -99,8 +144,8 @@ export class SurveyGrowPlus1Page {
       { page: 'WelcomePage' },
       {
         page: 'ResultsOverviewPage', params: {
-          survey: this.survey,
-          farmer: this.farmer
+          experiment: "ebTsqw4C5Wq9mn8xK1mT",
+          farmerKey: this.farmer._key
         }
       }
     ])
@@ -111,60 +156,17 @@ export class SurveyGrowPlus1Page {
 
   _setOptions() {
     // set predefined options for select box questions
-    this.questionMeta["Used with"] = {
-      options: [
-        { value: 'maize', label: 'Maize' },
-        { value: 'beans', label: 'Beans' },
-        { value: 'cowpeas', label: 'Cowpeas' },
-        { value: 'greengrams', label: 'Greengrams' },
-        { value: 'pigeon pea', label: 'Pigeon Pea' },
-        { value: 'other legumes', label: 'Other Legumes' },
-        { value: 'vegetables', label: 'Vegetables' },
-        { value: 'other non-legumes crops', label: 'Other Non-Legume Crops' },
-      ]
+    this.questionMeta = surveyMeta
+
+  }
+  showQuestion(difference, crop) {
+    // used to hide questions for specific crops
+    if (!difference.condition) { return true }
+    else {
+      if (difference.condition.crop == crop) { return true }
+      else { return false }
     }
-    this.questionMeta["Differences observed"] = {
-      options: [
-        {
-          value: 'Germination and early growth', label: 'Germination and early growth (in first 2 weeks)', subOptions: [
-            { value: 'faster', label: 'faster' },
-            { value: 'no difference', label: 'no difference' },
-            { value: 'slower', label: 'slower' },
-            { value: 'did not check', label: 'did not check' },
-          ]
-        },
-        {
-          value: 'Vegetative growth', label: 'Vegetative growth', subOptions: [
-            { value: 'faster', label: 'faster' },
-            { value: 'slower', label: 'slower' },
-          ]
-        },
-        {
-          value: 'Vegetative harvest cowpeas', label: 'Vegetative harvest (if cowpeas)', subOptions: [
-            { value: 'more leaves', label: 'more leaves' },
-            { value: 'fewer leaves', label: 'fewer leaves' },
-          ]
-        },
-        {
-          value: 'Flowering time', label: 'Flowering time', subOptions: [
-            { value: 'earlier', label: 'earlier' },
-            { value: 'later', label: 'later' },
-          ]
-        },
-        {
-          value: 'Podding cobbing time', label: 'Podding/ cobbing time', subOptions: [
-            { value: 'earlier', label: 'earlier' },
-            { value: 'later', label: 'later' },
-          ]
-        },
-        {
-          value: 'Harvest', label: 'Harvest', subOptions: [
-            { value: 'higher', label: 'higher' },
-            { value: 'lower', label: 'lower' },
-          ]
-        },
-      ]
-    }
+
   }
 
 

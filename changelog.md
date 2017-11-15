@@ -1,4 +1,18 @@
 #ChangeLog
+## future
+- ? Update index keys to make for easier recognistion (e.g. survey ids such as growplus/1 or growplus_1)
+- rebuild data structures so that farmer registration follows same format of regular surveys
+- survey delete
+- farmer searchbox
+- experiment overview insight
+
+## 0.1.4
+- Improved design for farmer perceptions insight
+- Survey edit 
+- growplus survey 1 small changes
+- linked results page nav from survey pages
+- survey images
+
 ## 0.1.3
 - farmer select table with sort
 - groPlus survey repeat group based on crop selected

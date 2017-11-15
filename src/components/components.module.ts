@@ -17,4 +17,4 @@ import { SurveyFormComponent } from './survey/form/survey-form';
 		SurveyFormComponent,
 	]
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

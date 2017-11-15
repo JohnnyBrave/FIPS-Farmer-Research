@@ -19,19 +19,16 @@ export class SurveysOverviewPage {
     console.log('farmer', this.farmer)
     console.log('experiment', this.experiment)
 
-    this.databasePrvdr.getCollection('Surveys').subscribe(
-      x => console.log('x', x)
-    )
     // subscribe to farmer completed, push array of values into json object (capturing date completed)
     this.databasePrvdr.getSubCollection('Farmers', this.farmer._key, 'Surveys').subscribe(
       c => {
-        console.log('farmer completed',c)
+        console.log('farmer completed', c)
         c.forEach(el => {
-          let key=el['_key']
+          let key = el['_key']
           this.farmerCompleted[key] = el['completed']
         })
-        console.log('farmer completed',this.farmerCompleted)
-    }
+        console.log('farmer completed', this.farmerCompleted)
+      }
     )
   }
 
@@ -40,8 +37,30 @@ export class SurveysOverviewPage {
     this.surveys = this.databasePrvdr.getCollection('Surveys')
   }
   startSurvey(survey) {
-    if (survey.hasOwnProperty('surveyPage')) {
-      this.navCtrl.push(survey.surveyPage, {farmer:this.farmer, experiment:this.experiment,survey:survey})
+    let existing: any;
+    if (this.farmerCompleted[survey._key]) {
+      // check for existing entry and retrieve (different methods for registration vs other surveys)
+      if (survey.title == "Farmer Registration") {
+        this.databasePrvdr.getDoc('Farmers', this.farmer._key)
+          .then(r => this.navCtrl.push(survey.surveyPage, {
+            farmer: this.farmer,
+            experiment: this.experiment,
+            survey: survey,
+            existing: r.data()
+          }))
+      }
+      else {
+        this.databasePrvdr.getDoc('Surveys', survey._key, 'Farmers', this.farmer._key)
+          .then(r => this.navCtrl.push(survey.surveyPage, {
+            farmer: this.farmer,
+            experiment: this.experiment,
+            survey: survey,
+            existing: r.data()
+          }))
+      }
+    }
+    else if (survey.hasOwnProperty('surveyPage')) {
+
     }
   }
   test() {

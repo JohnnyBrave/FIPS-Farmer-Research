@@ -53,6 +53,11 @@ export class DataCollectPage {
     this.navCtrl.push('SurveysOverviewPage',{farmer:this.farmer, experiment:experiment})
   }
   viewResults(experiment){
+    console.log('viewing results')
+    this.navCtrl.push('ResultsOverviewPage',{
+      farmerKey:this.farmer._key,
+      experiment:experiment
+    })
 
   }
   _filterExperiments(experiments){

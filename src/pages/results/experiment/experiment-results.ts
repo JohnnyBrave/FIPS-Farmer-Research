@@ -24,12 +24,17 @@ export class ExperimentResultsPage {
   focusFarmer: string = "_none";
   activeInsight: string = "_none";
   groPlusSurveyMeta: any = meta;
+  insightMeta:any;
   collatedResults: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public databasePrvdr: DatabaseProvider) {
     this._setInsights()
     this._getData()
+    this._setInsightMeta()
     console.log('groPlus meta', this.groPlusSurveyMeta)
+    // load farmer if navigating from data page, wait until after more init complete to set experiment
+    if(this.navParams.data.farmerKey){this.focusFarmer=navParams.data.farmerKey}
+    
   }
 
   iconClick(i){
@@ -50,11 +55,10 @@ export class ExperimentResultsPage {
       })
     this.surveys = this.databasePrvdr.getCollection('Surveys')
   }
-  test() {
-    console.log('farmers', this.farmers)
-  }
+
   _getMeta(farmers) {
     // takes list of farmer object containing _key and completed field and returns farmer doc
+    console.log('getting meta',farmers)
     let keyArray = farmers.map(f => f._farmerKey)
     this.databasePrvdr.getMultipleDocs('Farmers', keyArray).then(res => {
       this.farmers = res
@@ -79,6 +83,7 @@ export class ExperimentResultsPage {
       this.collatedResults = this._flatten(this.collatedResults, r, farmerKey)
     }
     console.log('collated', this.collatedResults)
+    if(this.navParams.data.experiment){this.activeInsight='Perceived effect of GroPlus on crops'}
 
   }
   _flatten(collated, json, pushVal) {
@@ -133,6 +138,11 @@ export class ExperimentResultsPage {
         return json
     }
 
+  }
+  _setInsightMeta(){
+    //generate meta in correct format
+    let meta:any ={}
+    meta.options=this.groPlusSurveyMeta["Used with"]
   }
 
   _createOptionsMap(meta) {

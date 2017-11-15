@@ -1,4 +1,4 @@
 <super-tabs>
-  <super-tab [root]="page1" title="Network" icon="globe"></super-tab>
-  <super-tab [root]="page2" title="Experiments" icon="flask"></super-tab>
+  <super-tab id="experimentsTab" [root]="page2"  [rootParams]="params" title="Experiments" icon="flask"></super-tab>
+  <super-tab id="networkTab" [root]="page1"  [rootParams]="params" title="Network" icon="globe"></super-tab>
 </super-tabs>

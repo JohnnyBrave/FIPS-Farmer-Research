@@ -12,7 +12,8 @@ import { DatabaseProvider, NotificationsProvider } from '../../../providers/prov
 
 
 export class NewFarmerRegistrationPage {
-  formgroup: FormGroup
+  formgroup: FormGroup;
+  editKey:string;
 
 
   constructor(
@@ -21,8 +22,8 @@ export class NewFarmerRegistrationPage {
     public formBuilder: FormBuilder,
     public events: Events,
     public loadingCtrl: LoadingController,
-    public databasePrvdr:DatabaseProvider,
-    public notificationsPrvdr:NotificationsProvider
+    public databasePrvdr: DatabaseProvider,
+    public notificationsPrvdr: NotificationsProvider,
   ) {
     this.formgroup = formBuilder.group({
       firstName: ['', Validators.required],
@@ -32,30 +33,46 @@ export class NewFarmerRegistrationPage {
     });
 
   }
-
-  preloadData(){
-    // use this.formgroup.setValue to update all form fields. Useful if in editing mode
+  ionViewDidLoad() {
+    console.log('navParams',this.navParams)
+    if (this.navParams.data.existing) {
+      this.editKey=this.navParams.data.existing._key
+      console.log('editkey',this.editKey)
+      this.preloadData(this.navParams.data.existing)
+    }
   }
 
-  register(){
+  preloadData(data) {
+    // use this.formgroup.setValue to update all form fields. Useful if in editing mode
+    for (let key in this.formgroup.value) {
+      if (data.hasOwnProperty(key)) {
+        let patch = {}
+        patch[key] = data[key]
+        this.formgroup.patchValue(patch)
+      }
+    }
+  }
+
+  register() {
     this.formgroup.patchValue({
-      displayName:this.formgroup.value.firstName + " " + this.formgroup.value.lastName
+      displayName: this.formgroup.value.firstName + " " + this.formgroup.value.lastName
     })
+    
     // let loading = this.loadingCtrl.create({
     //   content: 'Registering farmer...'
     // });
     // loading.present().then(_ => {
-      this.databasePrvdr.addFarmer(this.formgroup.value)
-      // .then(_=>{
-      //   loading.dismiss();
-      //   this.notificationsPrvdr.showToast('Farmer added successfully')
-      //   this.navCtrl.pop();
-      // })
-      // .catch(err=>{
-      //   console.log('err',err)
-      //   loading.dismiss();
-      // })
-      this.navCtrl.pop()
+    this.databasePrvdr.addFarmer(this.formgroup.value,this.editKey)
+    // .then(_=>{
+    //   loading.dismiss();
+    //   this.notificationsPrvdr.showToast('Farmer added successfully')
+    //   this.navCtrl.pop();
+    // })
+    // .catch(err=>{
+    //   console.log('err',err)
+    //   loading.dismiss();
+    // })
+    this.navCtrl.pop()
     // })
   }
 

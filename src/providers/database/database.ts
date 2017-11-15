@@ -32,8 +32,14 @@ export class DatabaseProvider {
     // return observer for collection documents
     return this.afs.collection(collectionID).valueChanges();
   }
-  getDoc(collectionID, docID) {
-    return this.afs.firestore.collection(collectionID).doc(docID).get()
+  getDoc(collectionID, docID, subcollectionID?, subcollectionDoc?) {
+    if(subcollectionDoc){
+      return this.afs.firestore.collection(collectionID).doc(docID).collection(subcollectionID).doc(subcollectionDoc).get()
+    }
+    else{
+      return this.afs.firestore.collection(collectionID).doc(docID).get()
+    }
+    
   }
   getMultipleDocs(collection, keyArray) {
     // takes collection and array of keys returning associated docs
@@ -53,9 +59,12 @@ export class DatabaseProvider {
     return this.afs.collection(collectionID1).doc(docID).collection(collectionID2).valueChanges();
   }
 
-  addFarmer(data) {
+  addFarmer(data,key?) {
     // create db entries and mark registration survey as completed (registration survey id hardcoded)
-    const key = this.afs.createId();
+    // pass existing key to update data
+    if(!key){
+      const key = this.afs.createId();
+    }
     data._key = key
     let batch = this.afs.firestore.batch();
     let ref1 = this.afs.firestore.collection('Farmers').doc(key)
