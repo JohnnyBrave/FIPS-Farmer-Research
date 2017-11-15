@@ -26,6 +26,10 @@
                     <div class="sort-field">Name</div>
                     <ion-icon name="arrow-down" *ngIf="sortField=='displayName'"></ion-icon>
                 </ion-col>
+                <ion-col (click)="sort('network')" class="pointer">
+                        <div class="sort-field">Network</div>
+                        <ion-icon name="arrow-down" *ngIf="sortField=='network'"></ion-icon>
+                    </ion-col>
                 <ion-col (click)="sort('householdCode')" class="pointer">
                     <div class="sort-field">Household Code</div>
                     <ion-icon name="arrow-down" *ngIf="sortField=='householdCode'"></ion-icon>
@@ -36,6 +40,9 @@
                     <ion-col>
                         <div>{{farmer.displayName}}</div>
                     </ion-col>
+                    <ion-col>
+                            <div>{{farmer.network}}</div>
+                        </ion-col>
                     <ion-col>
                         <p class="subtle-text" style="font-size: small">{{farmer.householdCode}}</p>
                     </ion-col>

@@ -4,9 +4,12 @@
       <button class="farmer-header" ion-button icon-left clear (click)="changeFarmer()">
         <ion-icon name="person"></ion-icon>
         {{farmer.displayName}}</button>
-      <button ion-button clear icon-only>
+      <!-- <button ion-button clear icon-only>
         <ion-icon name="more"></ion-icon>
-      </button>
+      </button> -->
+      <button ion-button clear icon-only (click)="editFarmer()">
+          <ion-icon name="create"></ion-icon>
+        </button>
     </div>
   </ion-navbar>
 </ion-header>

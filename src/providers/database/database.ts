@@ -62,10 +62,10 @@ export class DatabaseProvider {
   addFarmer(data,key?) {
     // create db entries and mark registration survey as completed (registration survey id hardcoded)
     // pass existing key to update data
-    if(!key){
-      const key = this.afs.createId();
-    }
+    console.log('adding farmer',data,key)
+    if(key==undefined){key = this.afs.createId()}
     data._key = key
+    console.log('key',data._key)
     let batch = this.afs.firestore.batch();
     let ref1 = this.afs.firestore.collection('Farmers').doc(key)
     batch.set(ref1, data)

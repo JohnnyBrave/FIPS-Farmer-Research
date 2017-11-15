@@ -21,6 +21,17 @@
   <ion-list no-lines>
     <ion-card>
       <form [formGroup]="formgroup">
+        <ion-item text-wrap>
+          <ion-label>*Network</ion-label>
+          <ion-select formControlName="network">
+            <ion-option *ngFor="let network of networks" [value]="network._key">{{network.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>*Household Code</ion-label>
+          <ion-input formControlName="householdCode" type="text"></ion-input>
+        </ion-item>
+
         <ion-item>
           <ion-label floating>*First Name</ion-label>
           <ion-input formControlName="firstName" type="text"></ion-input>
@@ -29,10 +40,7 @@
           <ion-label floating>*Last Name</ion-label>
           <ion-input formControlName="lastName" type="text"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label floating>*Household Code</ion-label>
-          <ion-input formControlName="householdCode" type="text"></ion-input>
-        </ion-item>
+
       </form>
     </ion-card>
 
