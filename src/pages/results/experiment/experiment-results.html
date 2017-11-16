@@ -5,6 +5,16 @@
       <ion-col>
         <div style="display:flex">
           <div class="option-icon">
+            <ion-icon name="pin"></ion-icon>
+          </div>
+          <ion-select [(ngModel)]="networksSelected" placeholder="Networks" multiple="true" [disabled]="!this.farmers" (ionChange)="networksChanged()">
+            <ion-option *ngFor="let network of networks | orderBy:'name' | async" [value]="network._key">{{network.name}}</ion-option>
+          </ion-select>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div style="display:flex">
+          <div class="option-icon">
             <ion-icon name="person"></ion-icon>
           </div>
           <select [(ngModel)]="focusFarmer" [disabled]="!this.farmers">
@@ -30,31 +40,50 @@
   <!-- Custom vis for perceived benefits -->
 
   <ion-card *ngIf="activeInsight=='Perceived effect of GroPlus on crops'">
-    <h2>What did other farmers think?</h2>
-    <div *ngFor="let crop of this.groPlusSurveyMeta['Used with'].options">
-      <div class="crop-title">{{crop.value}}</div>
-      <div *ngFor="let d of groPlusSurveyMeta['Differences observed'].options" style="display: flex; margin-bottom:5px">
-        <div class="diff-label">{{d.label}}</div>
-        <ion-grid style="flex:1">
-          <div *ngFor="let option of d.subOptions">
-            <!-- hide empty value option -->
-            <ion-row *ngIf="option.value!=''">
-              <ion-col class="option-label">{{option.label}}</ion-col>
-              <ion-col class="infographic" style="flex:1">
-                <div class="info-icon" *ngFor="let i of collatedResults['Differences observed'][crop.value][d.value][option.value]">
-                  <ion-icon *ngIf="i==focusFarmer" class="focus-farmer" name="person" (click)="iconClick(i)"></ion-icon>
-                  <ion-icon *ngIf="i!=focusFarmer" name="person" (click)="iconClick(i)"></ion-icon>
-                </div>
-                <!-- {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}} -->
-              </ion-col>
-              <ion-col style="flex:0; border-left:1px solid black; border-bottom:1px solid black">
-                {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}}
-              </ion-col>
-            </ion-row>
-          </div>
-      </ion-grid>
+    <h2 style="text-decoration: underline">What did other farmers think?</h2>
+    <div class="intro">
+      <p>In this survey we asked farmers if they noticed a difference using groPlus with their crops</p>
     </div>
+    <div class="overview">
+      <ion-icon name="person"></ion-icon>
+      <strong> total responses = {{results.length}}</strong>
     </div>
+    <div *ngIf="results.length>0">
+      <div *ngFor="let crop of this.groPlusSurveyMeta['Used with'].options">
+        <div class="crop-title">
+          <span>
+            {{crop.value}}
+          </span>
+          <span *ngIf="collatedResults['Used with'][crop.value]" class="number-counter">
+            (n = {{collatedResults['Used with'][crop.value].length}} )
+          </span>
+        </div>
+        <div>
+        </div>
+        <div *ngFor="let d of groPlusSurveyMeta['Differences observed'].options" style="display: flex; margin-bottom:5px">
+          <div class="diff-label">{{d.label}}</div>
+          <ion-grid style="flex:1">
+            <div *ngFor="let option of d.subOptions">
+              <!-- hide empty value option -->
+              <ion-row *ngIf="option.value!=''">
+                <ion-col class="option-label">{{option.label}}</ion-col>
+                <ion-col class="infographic" style="flex:1">
+                  <div class="info-icon" *ngFor="let i of collatedResults['Differences observed'][crop.value][d.value][option.value]">
+                    <ion-icon *ngIf="i==focusFarmer" class="focus-farmer" name="person" (click)="iconClick(i)"></ion-icon>
+                    <ion-icon *ngIf="i!=focusFarmer" name="person" (click)="iconClick(i)"></ion-icon>
+                  </div>
+                  <!-- {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}} -->
+                </ion-col>
+                <ion-col style="flex:0; border-left:1px solid black; border-bottom:1px solid black">
+                  {{collatedResults['Differences observed'][crop.value][d.value][option.value].length}}
+                </ion-col>
+              </ion-row>
+            </div>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+
   </ion-card>
 
   <!-- <canvas id="myChart" width="100%" height="100%"></canvas> -->

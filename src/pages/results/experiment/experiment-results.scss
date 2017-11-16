@@ -55,4 +55,16 @@ page-experiment-results {
     .focus-farmer{
         color:color($colors,secondary-dark)
     }
+    .overview{
+        margin-top:10px;
+    }
+     .select,.select-md{
+        padding:0;
+        .select-text{
+            color:rgba(255,255,255,0.9)
+        }
+    }
+    .number-counter{
+        font-size: x-small
+    }
 }

@@ -48,7 +48,7 @@ export class LoginPage {
         .then(user => {
           console.log('user created', user)
           loading.dismiss();
-          this.navCtrl.pop()
+          this.navCtrl.setRoot('WelcomePage')
         })
         .catch(err => {
           console.log('there was an error', err)
@@ -69,7 +69,7 @@ export class LoginPage {
       this.userPrvdr.login(this.form)
         .then(user => {
           loading.dismiss();
-          if(this.navCtrl.canGoBack()){this.navCtrl.pop()}
+          this.navCtrl.setRoot('WelcomePage')
         })
         .catch(err => {
           this.errorMsg = err.message

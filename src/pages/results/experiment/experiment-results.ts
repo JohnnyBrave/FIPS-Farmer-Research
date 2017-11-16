@@ -17,14 +17,18 @@ export class ExperimentResultsPage {
   insights: any
   canvas: any;
   ctx: any;
+  allFarmers: any;
   farmers: any;
+  allResults: any;
   results: any;
   surveys: any;
+  networks: any;
+  networksSelected: any;
   focusFarmerText: string = "Loading Farmers...";
   focusFarmer: string = "_none";
   activeInsight: string = "_none";
   groPlusSurveyMeta: any = meta;
-  insightMeta:any;
+  insightMeta: any;
   collatedResults: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public databasePrvdr: DatabaseProvider) {
@@ -33,13 +37,13 @@ export class ExperimentResultsPage {
     this._setInsightMeta()
     console.log('groPlus meta', this.groPlusSurveyMeta)
     // load farmer if navigating from data page, wait until after more init complete to set experiment
-    if(this.navParams.data.farmerKey){this.focusFarmer=navParams.data.farmerKey}
-    
+    if (this.navParams.data.farmerKey) { this.focusFarmer = navParams.data.farmerKey }
+
   }
 
-  iconClick(i){
+  iconClick(i) {
     // method when counter person icon clicked
-    console.log('i',i)
+    console.log('i', i)
   }
 
   _getData() {
@@ -48,22 +52,65 @@ export class ExperimentResultsPage {
     // testing only
     this.databasePrvdr.getSubCollection('Surveys', '8ft5LhC8t9Uo072m34px', "Farmers")
       .subscribe(r => {
+        this.allResults = r
         this.results = r
         console.log('results', this.results)
         this._processResults(r)
         this._getMeta(r)
       })
     this.surveys = this.databasePrvdr.getCollection('Surveys')
+    this.networks = this.databasePrvdr.getCollection('Networks')
   }
 
   _getMeta(farmers) {
     // takes list of farmer object containing _key and completed field and returns farmer doc
-    console.log('getting meta',farmers)
     let keyArray = farmers.map(f => f._farmerKey)
     this.databasePrvdr.getMultipleDocs('Farmers', keyArray).then(res => {
+      this.allFarmers = res
       this.farmers = res
-      this.focusFarmerText = "select a farmer"
+      this.focusFarmerText = "Farmer"
     })
+  }
+
+  networksChanged() {
+    // filter farmers to only those containing key. Update this.farmers array for farmer dropdown and push
+    // to key array for results filter
+    let farmerKeys = []
+    // show everything when none selected
+    console.log('networks selected',this.networksSelected, this.networksSelected.length)
+    if (this.networksSelected.length == 0) {
+      this.results=this.allResults
+      this._processResults(this.results)
+      return
+    }
+    // filter farmers to match those with correct network
+    else {
+      this.farmers = this.allFarmers.filter(f => {
+        for (let network of this.networksSelected) {
+          if (f.network && f.network == network) {
+            farmerKeys.push(f._key)
+            return true
+          }
+        }
+        return false
+      })
+    }
+    // hide results when none available
+    if (farmerKeys.length == 0) {
+      this.results = []
+    }
+    // filter results and process
+    else {
+      console.log('farmers', this.farmers)
+      this.results = this.allResults.filter(r => {
+        let farmerKey = r._farmerKey
+        if (farmerKeys.indexOf(farmerKey) > -1) { return true }
+        else return false
+      })
+      this._processResults(this.results)
+    }
+
+
   }
 
   _setInsights() {
@@ -83,7 +130,9 @@ export class ExperimentResultsPage {
       this.collatedResults = this._flatten(this.collatedResults, r, farmerKey)
     }
     console.log('collated', this.collatedResults)
-    if(this.navParams.data.experiment){this.activeInsight='Perceived effect of GroPlus on crops'}
+    //if(this.navParams.data.experiment){
+    this.activeInsight = 'Perceived effect of GroPlus on crops'
+    //}
 
   }
   _flatten(collated, json, pushVal) {
@@ -133,16 +182,16 @@ export class ExperimentResultsPage {
   _mapArrayToObject(json, array, id) {
     // push an id to multiple matching value arrays in an object, to track frequency of specific results
     for (let el of array) {
-        if (!json.hasOwnProperty(el)) { json[el] = [] }
-        json[el].push(id)
-        return json
+      if (!json.hasOwnProperty(el)) { json[el] = [] }
+      json[el].push(id)
     }
+    return json
 
   }
-  _setInsightMeta(){
+  _setInsightMeta() {
     //generate meta in correct format
-    let meta:any ={}
-    meta.options=this.groPlusSurveyMeta["Used with"]
+    let meta: any = {}
+    meta.options = this.groPlusSurveyMeta["Used with"]
   }
 
   _createOptionsMap(meta) {

@@ -6,6 +6,13 @@
 - farmer searchbox
 - experiment overview insight
 
+## 0.1.5
+- automatically save drafts and resume later
+- add network to registration
+- farmer edit page
+- farmer searchbox 
+- results filter by network
+
 ## 0.1.4
 - Improved design for farmer perceptions insight
 - Survey edit 
