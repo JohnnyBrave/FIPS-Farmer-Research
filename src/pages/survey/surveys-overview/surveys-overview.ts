@@ -42,33 +42,33 @@ export class SurveysOverviewPage {
       // check for existing entry and retrieve (different methods for registration vs other surveys)
       if (survey.title == "Farmer Registration") {
         this.databasePrvdr.getDoc('Farmers', this.farmer._key)
-          .then(r => this.navCtrl.push(survey.surveyPage, {
-            farmer: this.farmer,
-            experiment: this.experiment,
-            survey: survey,
-            existing: r.data()
-          }))
+          .then(r => this._loadSurveyPage(this.farmer, this.experiment, survey, r.data()))
+      }
+      else if (this.farmerCompleted[survey._key] == "draft") {
+        // load draft
+        this.databasePrvdr.getDoc('Surveys', survey._key, 'Drafts', this.farmer._key)
+          .then(r => this._loadSurveyPage(this.farmer, this.experiment, survey, r.data()))
       }
       else {
+        //otherwise load survey
         this.databasePrvdr.getDoc('Surveys', survey._key, 'Farmers', this.farmer._key)
-          .then(r => this.navCtrl.push(survey.surveyPage, {
-            farmer: this.farmer,
-            experiment: this.experiment,
-            survey: survey,
-            existing: r.data()
-          }))
+          .then(r => this._loadSurveyPage(this.farmer, this.experiment, survey, r.data()))
       }
     }
+    // if new, just go to page
     else if (survey.hasOwnProperty('surveyPage')) {
-      this.navCtrl.push(survey.surveyPage, {
-        farmer: this.farmer,
-        experiment: this.experiment,
-        survey: survey,
-      })
+      this._loadSurveyPage(this.farmer, this.experiment, survey)
     }
   }
-  test() {
-    console.log('farmercomplete', this.farmerCompleted)
+
+  _loadSurveyPage(farmer, experiment, survey, existing?) {
+    this.navCtrl.push(survey.surveyPage, {
+      farmer: farmer,
+      experiment: experiment,
+      survey: survey,
+      existing: existing
+    })
+
   }
 
 }

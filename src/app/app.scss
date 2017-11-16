@@ -111,3 +111,13 @@ p{
     display:none
 }
 
+// toast styles
+.toast-subtle{
+    .toast-wrapper{
+        background-color: rgba(0, 0, 0, 0)
+    }
+    .toast-message{
+        color:color($colors,primary)
+    }
+}
+

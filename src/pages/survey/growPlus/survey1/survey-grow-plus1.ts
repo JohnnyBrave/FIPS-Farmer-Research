@@ -87,14 +87,15 @@ export class SurveyGrowPlus1Page {
       this.cdr.detectChanges()
     }
     // extra method for crops selected
-   
-    console.log('formgroups', this.formGroups)
   }
   continue(form) {
-    console.log('form', this.formGroups[form].value)
   }
   nextSlide() {
     this.surveySlides.slideNext();
+  }
+  saveDraft(){
+    let submission = Object.assign({}, this.formGroups.meta.value, this.formGroups.part1.value, this.formGroups.part2.value, this.formGroups.part3.value, this.formGroups.part4.value);    
+    this.databasePrvdr.saveSurveyDraft(this.farmer._key,this.survey._key,submission)
   }
   setCrops() {
     console.log('setting crops', this.responses.cropsSelected)
@@ -120,13 +121,12 @@ export class SurveyGrowPlus1Page {
     })
     // set saved values, iterate over json in case new crops added
     let update ={}
-    console.log('saved',saved)
-    console.log('formgroup',this.formGroups.part3)
     for(let crop in this.formGroups.part3.value["Differences observed"]){
       update[crop]=this.formGroups.part3.value["Differences observed"][crop]
-      if(saved["Differences observed"][crop]){update[crop]=saved["Differences observed"][crop]}
+      if(Object.keys(saved).length>0){
+        if(saved["Differences observed"][crop]){update[crop]=saved["Differences observed"][crop]}
+      }
     }
-    console.log('update',update)
     this.formGroups.part3.setValue({"Differences observed":update})
     
     // add binding so template wont render before creation

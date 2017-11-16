@@ -17,7 +17,7 @@ individual farmer
           <div style="margin:2px 0 0 5px; flex:1">{{survey.title}}</div>
           <ion-icon name="arrow-forward"></ion-icon>
         </div>
-        <div *ngIf="farmerCompleted[survey._key]" style="margin-top:10px">
+        <div *ngIf="farmerCompleted[survey._key]  && farmerCompleted[survey._key]!='draft'" style="margin-top:10px">
           <div style="display: flex">
             <ion-icon name="checkmark-circle" color="primary-dark"></ion-icon>
             <div style="flex:1; margin-left:4px">
@@ -26,8 +26,16 @@ individual farmer
             </div>
           </div>
         </div>
+        <div *ngIf="farmerCompleted[survey._key] && farmerCompleted[survey._key]=='draft'" style="margin-top:10px">
+          <div style="display: flex">
+            <ion-icon name="remove-circle" color="secondary-dark"></ion-icon>
+            <div style="flex:1; margin-left:4px">
+              <div>Incomplete</div>
+            </div>
+          </div>
+        </div>
         <div class="incomplete" *ngIf="!farmerCompleted[survey._key]" style="margin-top:10px">
-          <div>Not Completed</div>
+          <div>Not Started</div>
         </div>
       </div>
     </div>

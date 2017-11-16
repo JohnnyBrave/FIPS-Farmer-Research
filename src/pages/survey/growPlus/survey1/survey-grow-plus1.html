@@ -1,5 +1,6 @@
 <ion-content class="survey">
-  <ion-slides #surveySlides direction="horizontal">
+  
+  <ion-slides #surveySlides (ionSlideDidChange)="saveDraft()" direction="horizontal">
 
     <ion-slide class="background-primary intro-slide">
       <h2>Grow Plus Survey</h2>
@@ -18,7 +19,9 @@
     </ion-slide>
 
     <ion-slide>
-      <div class="slide-heading">Section 1</div>
+      <div class="slide-heading">
+        <span>Section 1</span>
+      </div>
       <ion-card style="flex:1">
         <form [formGroup]="formGroups.part1">
           <ion-item text-wrap>

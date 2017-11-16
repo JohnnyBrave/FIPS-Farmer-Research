@@ -6,16 +6,16 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
+import {NotificationsProvider} from '../notifications/notifications'
 
 @Injectable()
 export class DatabaseProvider {
 
   private obsDoc: AngularFirestoreDocument<any>;
   private obsCollection: AngularFirestoreCollection<any>
-  public experiments: any
+  public experiments: any;
 
-  constructor(private afs: AngularFirestore) {
-    console.log('Hello DatabaseProvider Provider');
+  constructor(private afs: AngularFirestore, public notifications:NotificationsProvider) {
     // setup subscriber to return current experiments values on request
     afs.collection('Experiments').valueChanges().subscribe(e => this.experiments = e)
   }
@@ -108,7 +108,23 @@ export class DatabaseProvider {
     })
     let eRef = this.afs.firestore.collection('Surveys').doc(surveyKey).collection('Farmers').doc(farmerKey)
     batch.set(eRef, surveyData);
+    // delete any drafts
+    let delERef = this.afs.firestore.collection('Surveys').doc(surveyKey).collection('Drafts').doc(farmerKey)
+    batch.delete(delERef)
     return batch.commit()
+  }
+  saveSurveyDraft(farmerKey, surveyKey, surveyData) {
+    let batch = this.afs.firestore.batch();
+    let fRef = this.afs.firestore.collection('Farmers').doc(farmerKey).collection('Surveys').doc(surveyKey);
+    batch.set(fRef, {
+      _key: surveyKey,
+      completed: 'draft'
+    })
+    let eRef = this.afs.firestore.collection('Surveys').doc(surveyKey).collection('Drafts').doc(farmerKey)
+    batch.set(eRef, surveyData);
+    batch.commit().then(_=>{
+      this.notifications.showToast('Saved','bottom','toast-subtle')
+    })
   }
 
 

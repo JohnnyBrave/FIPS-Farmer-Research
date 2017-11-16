@@ -16,12 +16,13 @@ export class NotificationsProvider {
     console.log('Hello NotificationsProvider Provider');
   }
 
-  showToast(message, position?){
+  showToast(message, position?, cssClass?){
     if(!position){position='top'}
     const toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: position
+      position: position,
+      cssClass: cssClass
     });
     toast.present()
   }
