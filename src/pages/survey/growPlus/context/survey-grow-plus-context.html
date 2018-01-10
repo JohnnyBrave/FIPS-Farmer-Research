@@ -9,13 +9,14 @@
         <span>Ranking of benches on land</span>
       </div>
       <survey-question [question]="surveyQuestions[0]"></survey-question>
-      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
+      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.controls['q1.1'].valid">Continue</button>
     </ion-slide>
     
     <ion-slide>
       <div class="slide-heading">
         <span>Section 2</span>
       </div>
+      <survey-question [question]="surveyQuestions[1]"></survey-question>
       <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
     </ion-slide>
     <ion-slide>

@@ -17,6 +17,10 @@ export class SurveyBuilderProvider {
 
   constructor(private fb: FormBuilder, private events: Events) {
   }
+
+  getSurveyValue(controlName){
+    return this.formGroup.value[controlName]
+  }
   generateQuestionForm(questions, repeatGroup?: boolean) {
     // uses the formbuilder to a form from an array of questions provided
     // also handles building of repeat groups nested within forms
@@ -37,10 +41,8 @@ export class SurveyBuilderProvider {
     questions.forEach(q => {
       // build templates for any repeat groups
       if (q.type == "repeat") {
-        console.log('building repeat', q)
         // build formgroup sections appropriately
         let repeatQs = this._generateRepeatQuestions(q, questions)
-        console.log('repeat qs', repeatQs)
         q.repeatQuestions = repeatQs
         questionGroup[q.controlName] = this.fb.array([])
         displayQs.push(q)
@@ -52,12 +54,12 @@ export class SurveyBuilderProvider {
           displayQs.push(q)
           // omit non question from form (but keep in display)
           if (q.isQuestion == "TRUE") {
-            // apply any validator
-            if(q.validator){
+            // apply any validator (needs testing)
+            if(q.options.validator){
               console.log('applying validator',q)
               console.log('validators',Validators)
-              console.log('validator',Validators[q.validator])
-              questionGroup[q.controlName] = [q.value,Validators[q.validator]]
+              console.log('validator',Validators[q.options.validator])
+              questionGroup[q.controlName] = [q.value,Validators[q.options.validator]]
             }
             else{
               questionGroup[q.controlName] = q.value
