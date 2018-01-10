@@ -120,10 +120,11 @@ export class SurveyQuestionComponent {
           currentValue: this.formGroup.value[val]
         }
         // apply css
-        let el = document.getElementById(this.question.type + 'LabelText')
-        // use split/join to target all instances of text, apply name attribute for tracking later
-        el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
-        this.updateLabel(val)
+        // let el = document.getElementById(this.question.type + 'LabelText')
+        // console.log('inner html edit')
+        // // use split/join to target all instances of text, apply name attribute for tracking later
+        // el.innerHTML = el.innerHTML.split(matches.text[i]).join("<span class='dynamic-text' name='" + val + "'>" + val + "</span>")
+        // this.updateLabel(val)
       })
 
 

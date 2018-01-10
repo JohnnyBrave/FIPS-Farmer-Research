@@ -56,9 +56,6 @@ export class SurveyBuilderProvider {
           if (q.isQuestion == "TRUE") {
             // apply any validator (needs testing)
             if(q.options.validator){
-              console.log('applying validator',q)
-              console.log('validators',Validators)
-              console.log('validator',Validators[q.options.validator])
               questionGroup[q.controlName] = [q.value,Validators[q.options.validator]]
             }
             else{

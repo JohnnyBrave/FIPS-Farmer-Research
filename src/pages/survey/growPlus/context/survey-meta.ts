@@ -9,7 +9,7 @@ export default [
         }
     },
     {
-        label: "From 1 (most fertile) to $1.1 (least fertile), which benches did you use as your ‘fertile’; ‘moderate’; ‘infertile’ bench?",
+        label: "From 1 (most fertile) to {{q1.1}} (least fertile), which benches did you use as your ‘fertile’; ‘moderate’; ‘infertile’ bench?",
         isQuestion: "TRUE",
         controlName: "q1.2",
         type: "custom-benchIdentification",
