@@ -4,8 +4,8 @@ import { Settings } from './settings/settings';
 import { UserProvider } from './user/user';
 import { NotificationsProvider } from './notifications/notifications';
 import { DatabaseProvider } from './database/database';
-import { QuestionProvider } from './survey/question';
 import { QuestionControlProvider } from './survey/question-control';
+import {SurveyBuilderProvider} from './survey/builder'
 
 
 export {
@@ -14,7 +14,7 @@ export {
     Settings,
     UserProvider,
     DatabaseProvider,
-    QuestionProvider,
     QuestionControlProvider,
-    NotificationsProvider
+    NotificationsProvider,
+    SurveyBuilderProvider
 };

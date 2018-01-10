@@ -17,14 +17,16 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environments';
 // Own content
 import { Items } from '../mocks/providers/items';
-import { Settings } from '../providers/providers';
-import { UserProvider } from '../providers/providers';
-import { Api } from '../providers/providers';
-import { DatabaseProvider } from '../providers/providers';
-import {QuestionControlProvider} from '../providers/providers'
-import {QuestionProvider} from '../providers/providers'
+import { QuestionControlProvider } from '../providers/providers'
+import {
+  SurveyBuilderProvider,
+  NotificationsProvider,
+  UserProvider,
+  Settings,
+  Api,
+  DatabaseProvider
+} from '../providers/providers'
 import { MyApp } from './app.component';
-import { NotificationsProvider } from '../providers/notifications/notifications';
 
 
 // The translate loader needs to know where to load i18n files
@@ -86,8 +88,8 @@ export function provideSettings(storage: Storage) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     DatabaseProvider,
     QuestionControlProvider,
-    QuestionProvider,
-    NotificationsProvider
+    NotificationsProvider,
+    SurveyBuilderProvider
   ]
 })
 export class AppModule { }

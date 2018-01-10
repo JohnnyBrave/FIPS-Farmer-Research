@@ -1,0 +1,28 @@
+<ion-content class="survey" *ngIf="formGroup">
+  <ion-slides #surveySlides (ionSlideDidChange)="saveDraft()" direction="horizontal">
+    <ion-slide class="background-primary intro-slide">
+      <survey-intro></survey-intro>
+    </ion-slide>
+
+    <ion-slide>
+      <div class="slide-heading">
+        <span>Ranking of benches on land</span>
+      </div>
+      <survey-question [question]="surveyQuestions[0]"></survey-question>
+      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
+    </ion-slide>
+    
+    <ion-slide>
+      <div class="slide-heading">
+        <span>Section 2</span>
+      </div>
+      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
+    </ion-slide>
+    <ion-slide>
+      <div class="slide-heading">
+        <span>Section 3</span>
+      </div>
+      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

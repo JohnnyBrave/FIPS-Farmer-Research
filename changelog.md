@@ -6,7 +6,7 @@
 - farmer searchbox
 - experiment overview insight
 
-## 0.1.5
+## 0.1.6
 - automatically save drafts and resume later
 - add network to registration
 - farmer edit page

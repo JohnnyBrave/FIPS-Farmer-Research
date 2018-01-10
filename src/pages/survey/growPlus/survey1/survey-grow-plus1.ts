@@ -94,8 +94,12 @@ export class SurveyGrowPlus1Page {
     this.surveySlides.slideNext();
   }
   saveDraft(){
-    let submission = Object.assign({}, this.formGroups.meta.value, this.formGroups.part1.value, this.formGroups.part2.value, this.formGroups.part3.value, this.formGroups.part4.value);    
-    this.databasePrvdr.saveSurveyDraft(this.farmer._key,this.survey._key,submission)
+    // when slides changed function called to save a draft
+    // only applicable if prior submission not submitted to prevent overwrite
+    if(!this.editKey){
+      let submission = Object.assign({}, this.formGroups.meta.value, this.formGroups.part1.value, this.formGroups.part2.value, this.formGroups.part3.value, this.formGroups.part4.value);    
+      this.databasePrvdr.saveSurveyDraft(this.farmer._key,this.survey._key,submission)
+    }
   }
   setCrops() {
     console.log('setting crops', this.responses.cropsSelected)
