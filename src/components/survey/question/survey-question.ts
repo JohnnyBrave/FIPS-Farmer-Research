@@ -13,16 +13,21 @@ export class SurveyQuestionComponent {
   @Input('question') question;
   // @Input('formGroup') formGroup: FormGroup;
   formGroup: FormGroup
-  @Input('showLabel') showLabel: boolean;;
+  @Input('subProperty') subProperty;
+  @Input() set labelOnly(labelOnly:boolean){this.showQuestion=false}
+  @Input() set noLabel(noLabel:boolean){this.showLabel=false}
   @ViewChild('textAreaInput') textAreaInput: ElementRef
   @ViewChild('saveMessage') saveMessage: ElementRef
-  questionKey: string
+  questionKey: string;
+  showLabel:boolean;
+  showQuestion:boolean=true;
   selectOtherValue: any = "";
   selectOptionsArray: string[];
   initialScrollHeight: number;
   showSelectOther: boolean = false;
   originalLabel: string;
   dynamicText: any = {};
+  dynamicOptions:any=[]
   multipleTextInput: any = ""
   multipleTextValues: any = [];
   valueSaved: boolean = false;
@@ -36,31 +41,51 @@ export class SurveyQuestionComponent {
   }
   ngAfterViewInit() {
     this.questionKey = this.question.controlName
+    this._processOptions()
     // this._generateSelectOptions()
     this._generateMultipleValues()
     this._prepareDynamicText()
     this.cdr.detectChanges()
 
   }
+  _processOptions(){
+    // process options object and respond accordingly (partial)
+    let options = this.question.options
+    if(options.dynamicOptions){
+      this._prepareDynamicOptions(options.dynamicOptions)
+      this.events.subscribe('valueUpdate',data=>this._prepareDynamicOptions(options.dynamicOptions))
+    }
+  }
+
+  _prepareDynamicOptions(controlName){
+    // update options from form value
+    let options = this.formGroup.value[controlName]
+    if(options){
+      // ensure in correct array format
+      if(typeof options == 'string'){
+        // number inputs saved as string so convert back (angular issue https://github.com/ionic-team/ionic/issues/7121#issuecomment-287143709
+        options = parseInt(options)
+        this.dynamicOptions=[]
+        for(let i = 1;i<=options;i++){this.dynamicOptions.push(i)}
+      }
+    }
+    else{this.dynamicOptions=['Please answer question '+controlName+' before proceeding']}
+
+  }
+
+
+
+
+
 
 
   saveValue() {
     // save value on update (do not exclude "" in case user might have deleted a value)
-
-
     let value = this.formGroup.value[this.question.controlName]
     let update = { controlName: this.question.controlName, value: value, section: this.question.section }
     console.log('saving value', update)
     // publish key-value pair in event picked up by data provider to update
     this.events.publish('valueUpdate', update)
-    //this.events.publish('save')
-
-    //   this.valueSaved=true
-    //   let animator = new AnimationBuilder();
-    //   let el = this.saveMessage.nativeElement
-    //   animator.setType('fadeIn').setDuration(500).animate(this.saveMessage.nativeElement,AnimationMode.Show)
-    //  .then(_res=>{el.style.visibility="inherit"})
-
   }
 
 

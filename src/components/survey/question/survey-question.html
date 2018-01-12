@@ -9,57 +9,64 @@
       </div>
     </div>
 
-    <!-- need method to handle question repeat over multiple values, e.g. same question asked multiple times to different people -->
-
-    <!-- text area input -->
-    <div *ngIf="question.type=='text'">
-      <ion-item>
-        <textarea id="textAreaInput" #textAreaInput (focusout)="saveValue()" (keyup)="resize()" [formControlName]="question.controlName"></textarea>
-      </ion-item>
-    </div>
-    <!-- number input -->
-    <div *ngIf="question.type=='number'">
-      <ion-item>
-        <ion-input type="number" (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
-      </ion-item>
-    </div>
-    <!-- select -->
-    <div *ngIf="question.type=='select'">
-      <div *ngIf="!question.options.repeats">
-        <ion-item *ngIf="!showSelectOther">
-          <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [formControlName]="question.controlName">
-            <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
-            <ion-option *ngFor="let option of question.options.selectOptions" [value]="option.value">{{option.label}}</ion-option>
-          </ion-select>
-        </ion-item>
-      </div>
-      <!-- select with type other -->
-      <ion-item *ngIf="showSelectOther">
-        <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
-          placeholder="please specify"></ion-input>
-      </ion-item>
-    </div>
-    <!-- text multiple -->
-    <div *ngIf="question.type=='textMultiple'">
-      <div style="display: flex">
+    <!-- Question types -->
+    <div *ngIf="showQuestion">
+      <!-- text area input -->
+      <div *ngIf="question.type=='text'">
         <ion-item>
-          <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
-            type="text" [placeholder]="question.labelMultiple"></ion-input>
+          <textarea id="textAreaInput" #textAreaInput (focusout)="saveValue()" (keyup)="resize()" [formControlName]="question.controlName"></textarea>
         </ion-item>
-        <button ion-button (click)="addTextMultiple()">Add</button>
       </div>
-      <!-- multiple list -->
-      <div style="min-height: 6em">
-        <div style="display:flex" *ngFor="let value of multipleTextValues, index as i">
-          <div style="opacity: 0" class="question-number">{{question.controlName}}</div>
-          <div class="multiple-list">
-            <span class="bullet"></span>
-            <span>{{value}}</span>
-            <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
+      <!-- number input -->
+      <div *ngIf="question.type=='number'">
+        <ion-item>
+          <ion-input type="number" (focusout)="saveValue()" [formControlName]="question.controlName"></ion-input>
+        </ion-item>
+      </div>
+      <!-- select -->
+      <div *ngIf="question.type=='select'">
+        <div>Select question</div>
+        <div>
+          <ion-item *ngIf="!showSelectOther">
+            <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [formControlName]="question.controlName">
+              <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
+              <ion-option *ngFor="let option of question.options.selectOptions" [value]="option.value ? option.value : option">{{option.label ? option.label : option}}</ion-option>
+              <div *ngIf="question.options.dynamicOptions">
+                <ion-option *ngFor="let option of dynamicOptions" [value]="option.value ? option.value : option">{{option.label ? option.label : option}}</ion-option>
+              </div>
+            </ion-select>
+          </ion-item>
+        </div>
+        <!-- select with type other -->
+        <ion-item *ngIf="showSelectOther">
+          <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
+            placeholder="please specify"></ion-input>
+        </ion-item>
+      </div>
+      <!-- text multiple -->
+      <div *ngIf="question.type=='textMultiple'">
+        <div style="display: flex">
+          <ion-item>
+            <ion-input id="textMultipleInput" #textMultipleInput [(ngModel)]="multipleTextInput" [ngModelOptions]="{standalone: true}"
+              type="text" [placeholder]="question.labelMultiple"></ion-input>
+          </ion-item>
+          <button ion-button (click)="addTextMultiple()">Add</button>
+        </div>
+        <!-- multiple list -->
+        <div style="min-height: 6em">
+          <div style="display:flex" *ngFor="let value of multipleTextValues, index as i">
+            <div style="opacity: 0" class="question-number">{{question.controlName}}</div>
+            <div class="multiple-list">
+              <span class="bullet"></span>
+              <span>{{value}}</span>
+              <ion-icon name="remove-circle" class="multiple-remove-button" (click)="removeTextMultiple(i)"></ion-icon>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+
 
 
     <!-- label standalone type -->

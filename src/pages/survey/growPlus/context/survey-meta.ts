@@ -15,7 +15,7 @@ export default [
         controlName: "q1.2",
         type: "select",
         options: {
-            selectOptions: [1,2,3,4,5],
+            dynamicOptions:'q1.1',
             repeats:['Fertile','Moderate','Infertile']
         }
     },

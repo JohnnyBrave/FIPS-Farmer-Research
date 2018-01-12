@@ -1,4 +1,10 @@
 <!-- Generated template for the SurveyRepeatQuestionComponent component -->
-<div>
-  {{text}}
+<div *ngIf="repeatQuestion">
+  <!-- question label -->
+  <survey-question [question]="repeatQuestion" [subProperty]="repeat" labelOnly></survey-question>
+  <!-- repeats -->
+  <div *ngFor="let repeat of repeatArray">
+    <survey-question [question]="repeatQuestion" [subProperty]="repeat" noLabel></survey-question>
+  </div>
+
 </div>

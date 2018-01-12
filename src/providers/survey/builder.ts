@@ -50,7 +50,7 @@ export class SurveyBuilderProvider {
       else {
         // skip questions included in repeat groups unless repeat group
         if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
-          if (!q.value) { q.value = "" }
+          if (!q.value) { q.value = null }
           if(q.options && q.options.repeats){q.value={}}
           displayQs.push(q)
           // omit non question from form (but keep in display)
@@ -173,6 +173,7 @@ options:{
   repeats:string[]
   selectOptions: selectOption[]
   validator:string (must exist on Validators)
+  dynamicOptions:string (control name of question options to be pulled from)
 
 }
 
