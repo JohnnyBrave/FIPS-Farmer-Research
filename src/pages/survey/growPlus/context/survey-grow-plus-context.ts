@@ -11,14 +11,14 @@ import surveyQuestions from './survey-meta'
 })
 export class SurveyGrowPlusContextPage {
   formGroup:any;
-  surveyQuestions:any=[];
+  surveyQuestions:any={};
   customQuestion:any={value:{}}
   @ViewChild('surveySlides') surveySlides: Slides;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private sbp:SurveyBuilderProvider, private events:Events) {
     this.sbp.generateQuestionForm(surveyQuestions)
     this.formGroup=this.sbp.formGroup
-    this.surveyQuestions=surveyQuestions
+    surveyQuestions.forEach(q=>this.surveyQuestions[q.controlName]=q)
     console.log('surveyQuestions',this.surveyQuestions)
     this._addListeners()
     this._customInit()

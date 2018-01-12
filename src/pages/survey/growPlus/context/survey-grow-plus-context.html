@@ -8,7 +8,7 @@
       <div class="slide-heading">
         <span>Ranking of benches on land</span>
       </div>
-      <survey-question [question]="surveyQuestions[0]"></survey-question>
+      <survey-question [question]="surveyQuestions['q1.1']"></survey-question>
       <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.controls['q1.1'].valid">Continue</button>
     </ion-slide>
 
@@ -16,8 +16,9 @@
       <div class="slide-heading">
         <span>Section 2</span>
       </div>
+      <repeat-question></repeat-question>
       <div *ngFor="let bench of customQuestion.benches">{{bench}}</div>
-      <survey-question [question]="surveyQuestions[1]"></survey-question>
+      <survey-question [question]="surveyQuestions['q1.2']"></survey-question>
       <!-- <div [formGroup]="formGroup" style="flex:1">
         <ion-item *ngFor="let option of customQuestion.options">
           <ion-label>{{option}}</ion-label>
@@ -32,7 +33,7 @@
       <div class="slide-heading">
         <span>Section 3</span>
       </div>
-      <survey-question [question]="surveyQuestions[2]"></survey-question>
+      <survey-question [question]="surveyQuestions['q2']"></survey-question>
       <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
     </ion-slide>
   </ion-slides>

@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
+import { SurveyComponent } from './survey/survey';
 
 
 
 @NgModule({
-	declarations: [
+	declarations: [SurveyComponent,
 		
 	],
 	imports: [
 		IonicModule,
 	],
-	exports: [
+	exports: [SurveyComponent,
 	]
 })
 export class ComponentsModule { }
