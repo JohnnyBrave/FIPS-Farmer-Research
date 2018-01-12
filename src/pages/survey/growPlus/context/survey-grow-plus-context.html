@@ -11,18 +11,28 @@
       <survey-question [question]="surveyQuestions[0]"></survey-question>
       <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.controls['q1.1'].valid">Continue</button>
     </ion-slide>
-    
+
     <ion-slide>
       <div class="slide-heading">
         <span>Section 2</span>
       </div>
+      <div *ngFor="let bench of customQuestion.benches">{{bench}}</div>
       <survey-question [question]="surveyQuestions[1]"></survey-question>
-      <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
+      <!-- <div [formGroup]="formGroup" style="flex:1">
+        <ion-item *ngFor="let option of customQuestion.options">
+          <ion-label>{{option}}</ion-label>
+          <ion-select (ionChange)="customUpdated()" interface="action-sheet" [(ngModel)]="customQuestion.value[option]" [ngModelOptions]="{standalone: true}">
+            <ion-option *ngFor="let bench of customQuestion.benches" [value]="bench">{{bench}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </div> -->
+      <!-- <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!customQuestion.valid">Continue</button> -->
     </ion-slide>
     <ion-slide>
       <div class="slide-heading">
         <span>Section 3</span>
       </div>
+      <survey-question [question]="surveyQuestions[2]"></survey-question>
       <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
     </ion-slide>
   </ion-slides>

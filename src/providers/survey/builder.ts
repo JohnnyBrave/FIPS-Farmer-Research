@@ -51,6 +51,7 @@ export class SurveyBuilderProvider {
         // skip questions included in repeat groups unless repeat group
         if (this.repeatChildren.indexOf(q.controlName) == -1 || repeatGroup) {
           if (!q.value) { q.value = "" }
+          if(q.options && q.options.repeats){q.value={}}
           displayQs.push(q)
           // omit non question from form (but keep in display)
           if (q.isQuestion == "TRUE") {
@@ -61,7 +62,6 @@ export class SurveyBuilderProvider {
             else{
               questionGroup[q.controlName] = q.value
             }
-            
           }
         }
       }
@@ -71,7 +71,6 @@ export class SurveyBuilderProvider {
     console.log('questionGroup',questionGroup)
     this.formGroup = this.fb.group(questionGroup)
     return this.formGroup
-
   }
 
   _generateConditionOptions(question) {
@@ -133,7 +132,7 @@ export class SurveyBuilderProvider {
         return true
       }
     })
-    // add listener for update, e.g. if values depend on 4.2 listn for arrayChange:4.2
+    // add listener for update that depends on other values, e.g. if values depend on 4.2 listn for arrayChange:4.2
     this.events.unsubscribe('arrayChange:' + question.selectOptions)
     this.events.subscribe('arrayChange:' + question.selectOptions, update => {
       console.log('array change:' + question.selectOptions, update)

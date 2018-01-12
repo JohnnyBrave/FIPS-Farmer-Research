@@ -5,39 +5,43 @@ export default [
         controlName: "q1.1",
         type: "number",
         options: {
-            validator:'required'
+            validator: 'required'
         }
     },
+   
     {
         label: "From 1 (most fertile) to {{q1.1}} (least fertile), which benches did you use as your ‘fertile’; ‘moderate’; ‘infertile’ bench?",
         isQuestion: "TRUE",
         controlName: "q1.2",
-        type: "custom-benchIdentification",
-        options: null
+        type: "select",
+        options: {
+            selectOptions: [1,2,3,4,5],
+            repeats:['Fertile','Moderate','Infertile']
+        }
     },
     {
-        label: "",
+        label: "What soil description would you give to the bench described as each type",
         isQuestion: "TRUE",
         controlName: "q2",
         type: "repeat",
-        Options: {
+        options: {
             repeatAs: 'benchType',
             repeats: ['fertile', 'moderate', 'infertile']
         }
     },
     {
-        label: "What soil description would you give to the bench described as $benchType",
+        label: "$benchType",
         isQuestion: "TRUE",
         controlName: "q2.1",
         type: "select",
-        Options: null
+        options: null
     },
     {
         label: "",
         isQuestion: "TRUE",
-        controlName: "q3", 
+        controlName: "q3",
         type: "repeat",
-        Options: {
+        options: {
             repeatAs: 'benchType',
             repeats: ['fertile', 'moderate', 'infertile']
         }
@@ -47,14 +51,14 @@ export default [
         isQuestion: "TRUE",
         controlName: "q3.1",
         type: "select",
-        Options: null
+        options: null
     },
     {
         label: "",
         isQuestion: "TRUE",
         controlName: "q4",
         type: "repeat",
-        Options: {
+        options: {
             repeatAs: 'benchType',
             repeats: ['fertile', 'moderate', 'infertile']
         }
@@ -64,6 +68,6 @@ export default [
         isQuestion: "TRUE",
         controlName: "q4.1",
         type: "select",
-        Options: null
+        options: null
     }
 ]
