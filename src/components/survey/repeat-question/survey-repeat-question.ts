@@ -17,16 +17,10 @@ export class SurveyRepeatQuestionComponent {
 
 
   constructor() {
-    console.log('Hello SurveyRepeatQuestionComponent Component');
   }
   _setRepeatQuestion(question){
-    console.log('setting repeat question',question)
     this.repeatQuestion=question
     this.repeatArray=question.options.repeats
-  }
-  _setRepeatArray(repeats){
-    // convert data object to array
-    console.log('repeats',repeats)
   }
  
 

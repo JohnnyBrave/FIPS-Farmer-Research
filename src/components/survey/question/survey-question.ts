@@ -13,7 +13,8 @@ export class SurveyQuestionComponent {
   @Input('question') question;
   // @Input('formGroup') formGroup: FormGroup;
   formGroup: FormGroup
-  @Input('subProperty') subProperty;
+  @Input('subProperty') subProperty:string;
+  @Input('repeatLabel') repeatLabel:string;
   @Input() set labelOnly(labelOnly:boolean){this.showQuestion=false}
   @Input() set noLabel(noLabel:boolean){this.showLabel=false}
   @ViewChild('textAreaInput') textAreaInput: ElementRef
@@ -30,14 +31,12 @@ export class SurveyQuestionComponent {
   dynamicOptions:any=[]
   multipleTextInput: any = ""
   multipleTextValues: any = [];
+  value:any;
   valueSaved: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private sbp: SurveyBuilderProvider) {
     this.events.subscribe('valueUpdate', data => this.updateLabel(data))
     this.formGroup = this.sbp.formGroup;
-    console.log('formgroup', this.formGroup)
-
-
   }
   ngAfterViewInit() {
     this.questionKey = this.question.controlName
@@ -81,7 +80,14 @@ export class SurveyQuestionComponent {
 
   saveValue() {
     // save value on update (do not exclude "" in case user might have deleted a value)
+    // save subproperty if part of repeat 
     let value = this.formGroup.value[this.question.controlName]
+    if(this.subProperty){
+      value[this.subProperty] = this.value
+      let patch={}
+      patch[this.question.controlName]=value
+      this.formGroup.patchValue(patch)
+    }
     let update = { controlName: this.question.controlName, value: value, section: this.question.section }
     console.log('saving value', update)
     // publish key-value pair in event picked up by data provider to update
@@ -89,23 +95,23 @@ export class SurveyQuestionComponent {
   }
 
 
-  _generateSelectOptions() {
-    // parse select options to array
-    if (this.question.options.selectOptions) {
-      let options = this.question.options.selectOptions.split(",")
-      // trim whitespace at start if present
-      options = options.map(el => { return el.trim() })
-      this.selectOptionsArray = options
-      // if value not in options populate
-      let value = this.formGroup.value[this.question.controlName]
-      if (value != "") {
-        if (this.selectOptionsArray.indexOf(value) == -1) {
-          // this.showSelectOther=true
-          this.selectOtherValue = value
-        }
-      }
-    }
-  }
+  // _generateSelectOptions() {
+  //   // parse select options to array
+  //   if (this.question.options.selectOptions) {
+  //     let options = this.question.options.selectOptions.split(",")
+  //     // trim whitespace at start if present
+  //     options = options.map(el => { return el.trim() })
+  //     this.selectOptionsArray = options
+  //     // if value not in options populate
+  //     let value = this.formGroup.value[this.question.controlName]
+  //     if (value != "") {
+  //       if (this.selectOptionsArray.indexOf(value) == -1) {
+  //         // this.showSelectOther=true
+  //         this.selectOtherValue = value
+  //       }
+  //     }
+  //   }
+  // }
   _generateMultipleValues() {
     if (this.question.type == "textMultiple") {
       let value = this.sbp.getSurveyValue(this.questionKey)
@@ -120,6 +126,7 @@ export class SurveyQuestionComponent {
     // updates dynamic text labels if relevant 
     let controlName = update.controlName
     let value = update.value
+    if(value==controlName){value='please complete '+controlName}
     if (this.dynamicText[controlName]) {
       let el = document.getElementById(this.question.controlName + 'LabelText')
       let className = ".dynamicText" + controlName

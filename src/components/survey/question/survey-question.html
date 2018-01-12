@@ -25,20 +25,22 @@
       </div>
       <!-- select -->
       <div *ngIf="question.type=='select'">
-        <div>Select question</div>
         <div>
           <ion-item *ngIf="!showSelectOther">
-            <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [formControlName]="question.controlName">
-              <ion-option *ngIf="selectOtherValue" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
-              <ion-option *ngFor="let option of question.options.selectOptions" [value]="option.value ? option.value : option">{{option.label ? option.label : option}}</ion-option>
+            <ion-label *ngIf="repeatLabel" class="repeat-label">{{repeatLabel}}</ion-label>
+            <ion-select (ionChange)="selectUpdated(question)" interface="action-sheet" [(ngModel)]="value" [ngModelOptions]="{standalone: true}" [ngClass]="repeatLabel ? '' : 'no-label'">
+              <ion-option *ngIf="question.options.selectOther" [value]="selectOtherValue">{{selectOtherValue}}</ion-option>
+              <ion-option class="select-option" *ngFor="let option of question.options.selectOptions" [value]="option.value ? option.value : option">{{option.label ? option.label : option}}</ion-option>
               <div *ngIf="question.options.dynamicOptions">
                 <ion-option *ngFor="let option of dynamicOptions" [value]="option.value ? option.value : option">{{option.label ? option.label : option}}</ion-option>
               </div>
+              <ion-option *ngIf="question.options.selectOther">Other (please specify)</ion-option>
             </ion-select>
           </ion-item>
         </div>
         <!-- select with type other -->
         <ion-item *ngIf="showSelectOther">
+            <div>Label</div>
           <ion-input id="selectOther" #selectOther clearOnEdit="true" type="text" [value]="selectOtherValue" (focusout)="updateSelectOther($event)"
             placeholder="please specify"></ion-input>
         </ion-item>

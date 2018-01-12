@@ -171,9 +171,10 @@ options:{
   condition:conditionObject
   repeatAs:string
   repeats:string[]
-  selectOptions: selectOption[]
-  validator:string (must exist on Validators)
+  selectOptions: selectOption[] (array of options to select from)
   dynamicOptions:string (control name of question options to be pulled from)
+  validator:string (must exist on Validators)
+  
 
 }
 

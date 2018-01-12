@@ -1,6 +1,6 @@
 survey-question {
     .item{
-        background-color: color($colors,background-color)
+        // background-color: color($colors,background-color)
     }
     
     .question-label{
@@ -18,10 +18,16 @@ survey-question {
     }
     ion-select{
         max-width: 100%;
-        width:100%;
     }
+    .action-sheet-button{
+        border:1px solid gray!important;
+    }
+    .no-label{width:100%;}
+    .repeat-label{color:rgba(0,0,0,0.7)!important}
+
     .container{
         display: flex;
+        margin-bottom:20px;
     }
     .bookmark{
             float: right;

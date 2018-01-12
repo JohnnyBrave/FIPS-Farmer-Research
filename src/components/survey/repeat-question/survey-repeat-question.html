@@ -4,7 +4,7 @@
   <survey-question [question]="repeatQuestion" [subProperty]="repeat" labelOnly></survey-question>
   <!-- repeats -->
   <div *ngFor="let repeat of repeatArray">
-    <survey-question [question]="repeatQuestion" [subProperty]="repeat" noLabel></survey-question>
+    <survey-question [question]="repeatQuestion" [subProperty]="repeat" [repeatLabel]="repeat" noLabel></survey-question>
   </div>
 
 </div>
