@@ -1,0 +1,21 @@
+custom-select-picture {
+    .option-title{
+        text-decoration: underline;
+        margin-bottom:5px;
+    }
+    .option-description{
+        white-space: normal
+    }
+    .checkbox-icon{
+        background-color: white!important;
+    }
+    .checkbox-checked{
+        border-color: color($colors,primary)!important;
+        background-color: color($colors,primary)!important;
+        .checkbox-inner{
+            border-color:white!important;
+            
+        }
+        
+    }   
+}

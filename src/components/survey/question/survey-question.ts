@@ -13,25 +13,25 @@ export class SurveyQuestionComponent {
   @Input('question') question;
   // @Input('formGroup') formGroup: FormGroup;
   formGroup: FormGroup
-  @Input('subProperty') subProperty:string;
-  @Input('repeatLabel') repeatLabel:string;
-  @Input() set labelOnly(labelOnly:boolean){this.showQuestion=false}
-  @Input() set noLabel(noLabel:boolean){this.showLabel=false}
+  @Input('subProperty') subProperty: string;
+  @Input('repeatLabel') repeatLabel: string;
+  @Input() set labelOnly(labelOnly: boolean) { this.showQuestion = false }
+  @Input() set noLabel(noLabel: boolean) { this.showLabel = false }
   @ViewChild('textAreaInput') textAreaInput: ElementRef
   @ViewChild('saveMessage') saveMessage: ElementRef
   questionKey: string;
-  showLabel:boolean;
-  showQuestion:boolean=true;
+  showLabel: boolean;
+  showQuestion: boolean = true;
   selectOtherValue: any = "";
   selectOptionsArray: string[];
   initialScrollHeight: number;
   showSelectOther: boolean = false;
   originalLabel: string;
   dynamicText: any = {};
-  dynamicOptions:any=[]
+  dynamicOptions: any = []
   multipleTextInput: any = ""
   multipleTextValues: any = [];
-  value:any;
+  value: any;
   valueSaved: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef, private events: Events, private sbp: SurveyBuilderProvider) {
@@ -47,45 +47,45 @@ export class SurveyQuestionComponent {
     this.cdr.detectChanges()
 
   }
-  _processOptions(){
+  _processOptions() {
     // process options object and respond accordingly (partial)
     let options = this.question.options
-    if(options.dynamicOptions){
+    if (options.dynamicOptions) {
       this._prepareDynamicOptions(options.dynamicOptions)
-      this.events.subscribe('valueUpdate',data=>this._prepareDynamicOptions(options.dynamicOptions))
+      this.events.subscribe('valueUpdate', data => this._prepareDynamicOptions(options.dynamicOptions))
     }
   }
 
-  _prepareDynamicOptions(controlName){
+  _prepareDynamicOptions(controlName) {
     // update options from form value
     let options = this.formGroup.value[controlName]
-    if(options){
+    if (options) {
       // ensure in correct array format
-      if(typeof options == 'string'){
+      if (typeof options == 'string') {
         // number inputs saved as string so convert back (angular issue https://github.com/ionic-team/ionic/issues/7121#issuecomment-287143709
         options = parseInt(options)
-        this.dynamicOptions=[]
-        for(let i = 1;i<=options;i++){this.dynamicOptions.push(i)}
+        this.dynamicOptions = []
+        for (let i = 1; i <= options; i++) { this.dynamicOptions.push(i) }
       }
     }
-    else{this.dynamicOptions=['Please answer question '+controlName+' before proceeding']}
-
+    else { this.dynamicOptions = ['Please answer question ' + controlName + ' before proceeding'] }
   }
 
-
-
-
-
-
-
-  saveValue() {
+  saveValue(value?) {
     // save value on update (do not exclude "" in case user might have deleted a value)
-    // save subproperty if part of repeat 
-    let value = this.formGroup.value[this.question.controlName]
-    if(this.subProperty){
+
+    // update formgroup value if specified
+    if (value) {
+      let patch = {}
+      patch[this.question.controlName] = value
+      this.formGroup.patchValue(patch)
+    }
+    else{value = this.formGroup.value[this.question.controlName]}
+     // save subproperty if part of repeat 
+    if (this.subProperty) {
       value[this.subProperty] = this.value
-      let patch={}
-      patch[this.question.controlName]=value
+      let patch = {}
+      patch[this.question.controlName] = value
       this.formGroup.patchValue(patch)
     }
     let update = { controlName: this.question.controlName, value: value, section: this.question.section }
@@ -126,7 +126,7 @@ export class SurveyQuestionComponent {
     // updates dynamic text labels if relevant 
     let controlName = update.controlName
     let value = update.value
-    if(value==controlName){value='please complete '+controlName}
+    if (value == controlName) { value = 'please complete ' + controlName }
     if (this.dynamicText[controlName]) {
       let el = document.getElementById(this.question.controlName + 'LabelText')
       let className = ".dynamicText" + controlName

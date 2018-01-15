@@ -7,12 +7,14 @@ import { SurveyComponent } from './survey/survey';
 
 @NgModule({
 	declarations: [SurveyComponent,
+    ,
 		
 	],
 	imports: [
 		IonicModule,
 	],
 	exports: [SurveyComponent,
+    
 	]
 })
 export class ComponentsModule { }

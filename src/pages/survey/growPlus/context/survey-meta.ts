@@ -23,31 +23,32 @@ export default [
         label: "What soil description would you give to the bench described as each type",
         isQuestion: "TRUE",
         controlName: "q2",
-        type: "select",
+        type: "select-picture",
         options: {
             selectOptions:[
                 {
-                    value:"Ilimba",
-                    label:"Ilimba/Ilivi– dark (black) in colour, moderately fertile, cracks when dry, easy to use spring plough (loam)"
+                    value:"Ilimba/Ilivi",
+                    label:"Dark (black) in colour, moderately fertile, cracks when dry, easy to use spring plough (loam)"
                 },
                 {
                     value:"Kitune",
-                    label:"Kitune –brown-reddish in colour, fertile, easy to use spring plough, needs a lot of rain (Red volcanic soils)"
+                    label:"Brown-reddish in colour, fertile, easy to use spring plough, needs a lot of rain (Red volcanic soils)"
                 },
                 {
-                    value:"Kivuthi",
-                    label:"Kivuthi/Thaathai –various colours, made up of stones and soil, fertility depends on the constituent soil, hardest to use with spring plough"
+                    value:"Kivuthi/Thaathai",
+                    label:"Various colours, made up of stones and soil, fertility depends on the constituent soil, hardest to use with spring plough"
                 },
                 {
                     value:"Nthangathi",
-                    label:"Nthangathi –whitish in colour, sandy, infertile, low fertility, tends to leach nutrients when there are high rainfall amounts, easy to plough with spring plough in the rainy season, difficult to plough during dry season, requires prolonged rains for it to be productive. (sand)"
+                    label:"Whitish in colour, sandy, infertile, low fertility, tends to leach nutrients when there are high rainfall amounts, easy to plough with spring plough in the rainy season, difficult to plough during dry season, requires prolonged rains for it to be productive. (sand)"
                 },
                 {
                     value:"Yumba",
-                    label:"Yumba –grey in colour, clay, compact, not fertile, cracks when dry, hard to plough with spring plough (Clay)"
+                    label:"Grey in colour, clay, compact, not fertile, cracks when dry, hard to plough with spring plough (Clay)"
                 },
             ],
             selectOther:true,
+            selectMultiple:false,
             repeats: ['fertile', 'moderate', 'infertile']
         }
     },

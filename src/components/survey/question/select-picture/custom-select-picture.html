@@ -1,0 +1,22 @@
+<!-- Generated template for the CustomSelectComponent component -->
+<div *ngIf="question && question.options && question.options.selectOptions">
+  <ion-item *ngFor="let option of question.options.selectOptions">
+    <ion-label>
+      <!-- <img *ngIf="option.image" [src]="option.image"> -->
+      <div class="option-title">
+        {{option.value}}
+      </div>
+      <div class="option-description">
+        {{option.label}}
+      </div>
+    </ion-label>
+    <!-- select one -->
+    <ion-checkbox (click)="selectClicked($event,option.value)" [(ngModel)]="selected[option.value]">
+    </ion-checkbox>
+    <!-- select multiple -->
+    <!-- <ion-checkbox *ngIf="formGroup && formGroup.value" [checked]="formGroup.value[question.controlName]==option.value" (ionChange)="checkboxClick()" [(ngModel)]="selected[option.value]">
+      </ion-checkbox> -->
+
+  </ion-item>
+
+</div>
