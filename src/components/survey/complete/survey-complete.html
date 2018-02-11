@@ -1,0 +1,15 @@
+<!-- Generated template for the SurveyCompleteComponent component -->
+<div>
+  <h1>Survey Complete</h1>
+  <p *ngIf="!submitted">You can swipe back through the slides to review, or click below to submit</p>
+  <p *ngIf="submitted">Thank you for your submission</p>
+  <div class="swipe">
+    <img src="assets/img/swipe-both.png">
+  </div>
+  <button *ngIf="!submitted" ion-button icon-left (click)="submit()">
+    <ion-icon name="done-all"></ion-icon>Submit</button>
+  <button *ngIf="submitted" ion-button icon-left color="secondary" (click)="viewResults()">
+    <ion-icon name="stats"></ion-icon>View Results</button>
+  <button *ngIf="submitted" ion-button icon-left (click)="goHome()">
+    <ion-icon name="home"></ion-icon>Go Home</button>
+</div>

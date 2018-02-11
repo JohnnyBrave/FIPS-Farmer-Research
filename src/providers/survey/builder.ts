@@ -174,6 +174,7 @@ options:{
   selectOptions: selectOption[] (array of options to select from)
   dynamicOptions:string (control name of question options to be pulled from)
   validator:string (must exist on Validators)
+  repeatDisplay: 'sections' (shows section heading for repeats, in future might also include 'slides' for slide repeats)
   
 
 }

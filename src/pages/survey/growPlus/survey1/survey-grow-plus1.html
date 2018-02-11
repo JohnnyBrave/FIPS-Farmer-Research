@@ -3,7 +3,8 @@
   <ion-slides #surveySlides (ionSlideDidChange)="saveDraft()" direction="horizontal">
 
     <ion-slide class="background-primary intro-slide">
-      <h2>Grow Plus Survey</h2>
+        <survey-intro title="Grow Plus Survey" subtitle="Part 1"></survey-intro>
+      <!-- <h2>Grow Plus Survey</h2>
       <h3>Part 1</h3>
 
       <button ion-button icon-left (click)="nextSlide()" color="secondary">
@@ -15,7 +16,7 @@
         <div>Swipe forward or click to start</div>
         <br>
         <img src="assets/img/swipe-left.png">
-      </div>
+      </div> -->
     </ion-slide>
 
     <ion-slide>
@@ -107,7 +108,7 @@
 
 
     <ion-slide *ngIf="responses.usedBefore=='no' || (formGroups.part1.valid && formGroups.part2.valid && formGroups.part4.valid)">
-      <h1>Survey Complete</h1>
+      <!-- <h1>Survey Complete</h1>
       <p *ngIf="!submitted">You can swipe back through the slides to review, or click below to submit</p>
       <p *ngIf="submitted">Thank you for your submission</p>
       <div class="swipe">
@@ -119,7 +120,7 @@
         <ion-icon name="stats"></ion-icon>View Results</button>
       <button *ngIf="submitted" ion-button icon-left (click)="goHome()">
         <ion-icon name="home"></ion-icon>Go Home</button>
-
+ -->
 
     </ion-slide>
 

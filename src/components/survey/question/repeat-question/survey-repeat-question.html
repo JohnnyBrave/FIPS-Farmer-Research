@@ -4,6 +4,9 @@
   <survey-question [question]="repeatQuestion" [subProperty]="repeat" labelOnly></survey-question>
   <!-- repeats -->
   <div *ngFor="let repeat of repeatArray">
+    <div class="repeat-section" *ngIf="repeatQuestion.options.repeatDisplay == 'sections'">
+      {{repeat}}
+    </div>
     <survey-question [question]="repeatQuestion" [subProperty]="repeat" [repeatLabel]="repeat" noLabel></survey-question>
   </div>
 

@@ -49,24 +49,54 @@ export default [
             ],
             selectOther:true,
             selectMultiple:false,
-            repeats: ['fertile', 'moderate', 'infertile']
+            repeats: ['Fertile', 'Moderate', 'Infertile'],
+            repeatDisplay:'sections'
         }
     },
 
     
     {
-        label: "Which of these weeds have you seen growing on the benches that you have described as $benchType",
+        label: "Which of these weeds growing on the benches that you have described as each type",
         isQuestion: "TRUE",
         controlName: "q3",
-        type: "select",
-        options: null
+        type: "select-picture",
+        options: {
+            selectOptions:[
+                {
+                    value:"Makongo",
+                    label:""
+                },
+                {
+                    value:"Songe",
+                    label:""
+                },
+                {
+                    value:"Kivuthi/Thaathai",
+                    label:""
+                },
+                {
+                    value:"Kithangathi",
+                    label:""
+                },
+                {
+                    value:"Kivui",
+                    label:""
+                },
+            ],
+            selectOther:true,
+            selectMultiple:true,
+            repeats: ['Fertile', 'Moderate', 'Infertile'],
+            repeatDisplay:'sections'
+        }
     },
-   
     {
-        label: "What is the soil texture on the benches that you have described as $benchType",
+        label: "What is the soil texture on the benches that you have described as your ‘fertile’; ‘moderate’; ‘infertile’ bench?",
         isQuestion: "TRUE",
-        controlName: "q4.1",
+        controlName: "q4",
         type: "select",
-        options: null
-    }
+        options: {
+            selectOptions:['sand','loamy sand','sandy loam','silt loam','loam','sandy clay','silty clay','clay'],
+            repeats:['Fertile','Moderate','Infertile']
+        }
+    },
 ]

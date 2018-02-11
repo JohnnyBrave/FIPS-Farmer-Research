@@ -73,20 +73,24 @@ export class SurveyQuestionComponent {
 
   saveValue(value?) {
     // save value on update (do not exclude "" in case user might have deleted a value)
-
-    // update formgroup value if specified
-    if (value) {
-      let patch = {}
-      patch[this.question.controlName] = value
-      this.formGroup.patchValue(patch)
-    }
-    else{value = this.formGroup.value[this.question.controlName]}
-     // save subproperty if part of repeat 
+    let newValue
     if (this.subProperty) {
-      value[this.subProperty] = this.value
+      // update subproperty value and patch
+      let v = this.formGroup.value[this.question.controlName] ? this.formGroup.value[this.question.controlName] : {}
+      v[this.subProperty] = value ? value : this.value
       let patch = {}
-      patch[this.question.controlName] = value
+      patch[this.question.controlName] = v
       this.formGroup.patchValue(patch)
+      value = v
+    }
+    else {
+      // update formgroup value if specified
+      if (value) {
+        let patch = {}
+        patch[this.question.controlName] = value
+        this.formGroup.patchValue(patch)
+      }
+      else { value = this.formGroup.value[this.question.controlName] }
     }
     let update = { controlName: this.question.controlName, value: value, section: this.question.section }
     console.log('saving value', update)
@@ -150,9 +154,7 @@ export class SurveyQuestionComponent {
       if (matches.text != null) {
         matches.vars = matches.text.map(function (x) { return x.match(/[\w\.]+/)[0]; });
       }
-      console.log('matches', matches)
       matches.vars.forEach((val, i) => {
-        console.log('val', val)
         // populate match text and current val. get current val from provider in case it is outside of current question group
         this.dynamicText[val] = {
           matchText: matches.text[i],

@@ -11,9 +11,11 @@
       </div>
     </ion-label>
     <!-- select one -->
-    <ion-checkbox (click)="selectClicked($event,option.value)" [(ngModel)]="selected[option.value]">
+    <ion-checkbox (click)="selectClicked($event,option.value)" [(ngModel)]="selected[option.value]" *ngIf="!question.options.selectMultiple">
     </ion-checkbox>
     <!-- select multiple -->
+    <ion-checkbox (click)="selectMultipleClicked($event,option.value)" [(ngModel)]="selected[option.value]" *ngIf="question.options.selectMultiple">
+      </ion-checkbox>
     <!-- <ion-checkbox *ngIf="formGroup && formGroup.value" [checked]="formGroup.value[question.controlName]==option.value" (ionChange)="checkboxClick()" [(ngModel)]="selected[option.value]">
       </ion-checkbox> -->
 

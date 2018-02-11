@@ -5,8 +5,10 @@ import { SurveyComponent } from './survey/survey';
 
 
 
+
 @NgModule({
-	declarations: [SurveyComponent,
+	declarations: [SurveyComponent,,
+    
     ,
 		
 	],
@@ -14,6 +16,7 @@ import { SurveyComponent } from './survey/survey';
 		IonicModule,
 	],
 	exports: [SurveyComponent,
+    ,
     
 	]
 })

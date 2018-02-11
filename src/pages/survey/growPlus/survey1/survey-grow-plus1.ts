@@ -67,6 +67,7 @@ export class SurveyGrowPlus1Page {
       console.log('editing submission', this.editKey)
       this.preloadData(this.navParams.data.existing)
     }
+    this.events.subscribe('slides:next',()=>this.nextSlide())
   }
 
   preloadData(data) {

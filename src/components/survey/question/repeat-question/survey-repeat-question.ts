@@ -10,14 +10,9 @@ export class SurveyRepeatQuestionComponent {
   @Input() set question(question: number){
     this._setRepeatQuestion(question)
   };
-  // @Input() set repeats(repeats: number) {
-  //   this._setRepeatArray(repeats)
-  // }
 
-
-
-  constructor() {
-  }
+  constructor() {}
+  
   _setRepeatQuestion(question){
     this.repeatQuestion=question
     this.repeatArray=question.options.repeats

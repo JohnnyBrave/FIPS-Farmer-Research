@@ -1,0 +1,54 @@
+<ion-content class="survey" *ngIf="formGroup">
+    <ion-slides #surveySlides (ionSlideDidChange)="saveDraft()" direction="horizontal">
+      <ion-slide class="background-primary intro-slide">
+        <survey-intro title="Grow Plus Survey" subtitle="Context Questions"></survey-intro>
+      </ion-slide>
+  
+      <!-- <ion-slide>
+        <div class="slide-heading">
+          <span>Ranking of benches on land</span>
+        </div>
+        <ion-card>
+          <survey-question [question]="surveyQuestions['q1.1']"></survey-question>
+          <survey-repeat-question [question]="surveyQuestions['q1.2']"></survey-repeat-question>
+        </ion-card>
+        <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.value['q1.1'] || !formGroup.value['q1.2'].Infertile">Continue</button>
+      </ion-slide>
+  
+      <ion-slide>
+        <div class="slide-heading">
+          <span>Soil Type</span>
+        </div>
+        <ion-card>
+          <survey-repeat-question [question]="surveyQuestions['q2']"></survey-repeat-question>
+        </ion-card>
+        <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.value['q2'] || !formGroup.value['q2'].Infertile">Continue</button>
+  
+      </ion-slide>
+  
+      <ion-slide>
+        <div class="slide-heading">
+          <span>Weeds</span>
+        </div>
+        <ion-card>
+          <survey-repeat-question [question]="surveyQuestions['q3']"></survey-repeat-question>
+        </ion-card>
+        <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.value['q3'] || !formGroup.value['q3'].Infertile">Continue</button>
+  
+      </ion-slide>
+      <ion-slide>
+        <div class="slide-heading">
+          <span>Soil Texture</span>
+        </div>
+        <ion-card>
+            <survey-repeat-question [question]="surveyQuestions['q4']"></survey-repeat-question>
+          </ion-card>
+        <button ion-button (click)="nextSlide()" style="margin-top:20px" block color="primary" [disabled]="!formGroup.valid">Continue</button>
+      </ion-slide> -->
+  
+      <ion-slide class="complete-slide">
+          <survey-complete></survey-complete>
+        </ion-slide>
+  
+    </ion-slides>
+  </ion-content>

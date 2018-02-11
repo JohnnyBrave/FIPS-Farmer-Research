@@ -3,6 +3,7 @@ import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
 // 
 import { SurveyIntroComponent } from './intro/survey-intro';
+import { SurveyCompleteComponent } from './complete/survey-complete';
 
 import { SurveyQuestionComponent } from './question/survey-question';
 import { SurveyRepeatQuestionComponent } from './question/repeat-question/survey-repeat-question';
@@ -13,6 +14,7 @@ import { CustomSelectPictureComponent } from './question/select-picture/custom-s
 	declarations: [
 		SurveyQuestionComponent,
 		SurveyIntroComponent,
+		SurveyCompleteComponent,
 		SurveyRepeatQuestionComponent,
 		CustomSelectPictureComponent
 	],
@@ -22,6 +24,7 @@ import { CustomSelectPictureComponent } from './question/select-picture/custom-s
 	exports: [
 		SurveyQuestionComponent,
 		SurveyIntroComponent,
+		SurveyCompleteComponent,
 		SurveyRepeatQuestionComponent,
 		CustomSelectPictureComponent
 	]
